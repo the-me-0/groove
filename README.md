@@ -7,7 +7,7 @@
 ## Advancements
 
 Project global advancement
-- [ ] tutorial (*0:03:58*/*6:47:59*)
+- [ ] tutorial (*0:23:11*/*6:47:59*)
 - [ ] invite link
 - [ ] YouTube integration
 - [ ] Mobile App
