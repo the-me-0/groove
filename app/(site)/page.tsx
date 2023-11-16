@@ -18,6 +18,9 @@ export default function Home() {
             </div>
         </div>
       </Header>
+        <p className='font-semibold text-5xl py-8 px-8'>
+            This is a protected route.
+        </p>
       <div className='mt-2 mb-7 px-6'>
           <div className='flex justify-between items-center'>
               <h1 className='text-white text-2xl font-semibold'>
