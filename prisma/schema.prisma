@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id       String @id @default(uuid())
+  userId   String @unique
+  name     String
+  imageUrl String @db.Text
+  email    String @db.Text
+
+  playlists      Playlist[] // The song the user has uploaded
+  songs          Song[] // The playlist the user has created
+  likedPlaylists LikesOnPlaylists[]
+  likedSongs     LikesOnSongs[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Song {
+  id        String @id @default(uuid())
+  name      String @unique
+  imageUrl  String @db.Text
+  artist    String
+  storageId String // song storage id in the file-server
+
+  // The user that uploaded the song
+  Profile   Profile @relation(fields: [profileId], references: [id])
+  profileId String
+
+  playlists        Playlist[] // The playlists the song is part of
+  LikesOnSongs     LikesOnSongs[] // likes on this song
+  SongsOnPlaylists SongsOnPlaylists[]
+
+  @@index([profileId])
+}
+
+enum PlaylistType {
+  PLAYLIST
+  ALBUM
+}
+
+// on CREATE, UPDATE, DELETE : if before.songs != after.songs, recalculate artists
+model Playlist {
+  id       String       @id @default(uuid())
+  name     String
+  imageUrl String       @db.Text
+  type     PlaylistType
+  // if add transaction, field "artists String @db.Text"
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  Song             Song[]
+  LikesOnPlaylists LikesOnPlaylists[]
+  SongsOnPlaylists SongsOnPlaylists[]
+
+  @@index([profileId])
+}
+
+// ManyToMany relations links
+
+model LikesOnSongs {
+  song       Song     @relation(fields: [songId], references: [id])
+  songId     String // relation scalar field (used in the `@relation` attribute above)
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  profileId  String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+
+  @@id([songId, profileId])
+}
+
+model LikesOnPlaylists {
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String // relation scalar field (used in the `@relation` attribute above)
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  profileId  String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+
+  @@id([playlistId, profileId])
+}
+
+model SongsOnPlaylists {
+  song       Song     @relation(fields: [songId], references: [id])
+  songId     String
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String
+  assignedAt DateTime @default(now())
+
+  @@id([playlistId, songId])
+}
