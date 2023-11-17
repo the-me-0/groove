@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-**Groove** is vowed to be a private spotify-like application, developed by (Noah Philippe)[https://github.com/the-me-0], based on « Code With Antonio » tutorial available (here)[https://www.youtube.com/watch?v=2aeMRB8LL4o].
+**Groove** is vowed to be a private spotify-like application, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio » tutorial available (here)[https://www.youtube.com/watch?v=2aeMRB8LL4o].
 
 ## Advancements
 
@@ -125,7 +125,7 @@ npx shadcn-ui@latest add button
 npx shadcn-ui@latest add dropdown-menu
 ```
 
-Now follow (those few steps)[https://ui.shadcn.com/docs/dark-mode/next],
+Now follow [those few steps](https://ui.shadcn.com/docs/dark-mode/next),
 then once arrived at the "Add a mode toggle" section,
 create a new file *lib/components/mode-toggle.tsx* and copy-paste the code given by shadcn.
 
