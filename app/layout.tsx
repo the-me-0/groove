@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Figtree } from 'next/font/google'
 import './globals.css'
-import Sidebar from '@/lib/components/Sidebar';
+import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from '@/lib/components/theme-provider'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -16,12 +17,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={font.className}>
-      <Sidebar>
-        {children}
-      </Sidebar>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={font.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey='groove-theme'
+        >
+          {children}
+        </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
