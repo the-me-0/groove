@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-**Groove** is vowed to be a private spotify-like application, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio » tutorial available (here)[https://www.youtube.com/watch?v=2aeMRB8LL4o].
+**Groove** is vowed to be a private spotify-like application, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio » tutorial available [here](https://www.youtube.com/watch?v=2aeMRB8LL4o).
 
 ## Advancements
 
@@ -143,3 +143,5 @@ To start and play with clerk user button and mode toggle, add the following in y
   <div className='mt-2 mb-7 px-6'>
   // ...
 ```
+The ModeToggle will not toggle a great white mode, only the background will turn white for now, but don't worry!
+The white mode will be a functionality in itself, that we will implement later.
