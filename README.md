@@ -1,10 +1,23 @@
-# **Groove**
+<div style="display: flex; align-items: center; justify-content: center;">
+<h1>GROOVE — Self hosted spotify client</h1>
+<h3>Powered by NextJS and Docker</h3>
+</div>
+<br/>
 
-## Getting Started
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-phoenix.svg)](https://forthebadge.com)
+
+### Table of Contents
+- [Introduction](#introduction)
+- [Roadmap](#roadmap)
+- [How to reproduce](#how-to-reproduce)
+- [License](#license) add licence later
+- [Contact](#contact) add contact infos
+
+## Introduction
 
 **Groove** is vowed to be a private spotify-like application, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio » tutorial available [here](https://www.youtube.com/watch?v=2aeMRB8LL4o).
 
-## Advancements
+## Roadmap
 
 Project global advancement
 - [ ] tutorial (*0:56:21*/*6:47:59*)
@@ -12,7 +25,7 @@ Project global advancement
 - [ ] YouTube integration
 - [ ] Mobile App
 
-### Advancements appendix
+### Roadmap appendix
 
 - tutorial: shows the time of tutorial followed on the complete tutorial duration
 - invite link: this functionality adds some kind of control, as for a new user to create an account on **Groove**, a sponsorship link will be needed.
