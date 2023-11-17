@@ -72,6 +72,68 @@ body,
   }
 }
 
+/* TARS LOGO */
+#tars-logo {
+  background-image: linear-gradient(120deg, #34e0f0 0%, #b400ff 100%); /* 065f46 / rgb(52, 156, 153) */
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  width: min(40vw, 30rem);
+  height: min(40vw, 30rem);
+  animation: morph 3s linear infinite;
+  transform-style: preserve-3d;
+  outline: 1px solid transparent;
+  will-change: border-radius;
+}
+#tars-logo:before, #tars-logo:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  box-shadow: 5px 5px 89px rgba(0, 102, 255, 0.21); /* rgba(1, 64, 20, 0.21) */
+  will-change: border-radius, transform, opacity;
+  animation-delay: 100ms;
+  background-image: linear-gradient(120deg, rgba(0, 67, 255, .55) 0%, rgba(0, 103, 255, .89) 100%); /* #015e34 / #014014 */
+  animation: morph 3s linear infinite;
+  opacity: 0.21;
+  animation-duration: 5s;
+}
+#tars-logo:after {
+  animation-delay: 1500ms;
+  opacity: 0.89;
+  content: "TARS";
+  line-height: min(40vw, 30rem);
+  text-indent: min(20vw, 15rem);
+  font-size: min(8vw, 6rem);
+  animation-duration: 2s;
+}
+@keyframes morph {
+  0%, 100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translate3d(0, 0, 0) rotateZ(0.01deg);
+  }
+  34% {
+    border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+    transform: translate3d(0, 5px, 0) rotateZ(0.01deg);
+  }
+  50% {
+    opacity: 0.89;
+    transform: translate3d(0, 0, 0) rotateZ(0.01deg);
+  }
+  67% {
+    border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+    transform: translate3d(0, -3px, 0) rotateZ(0.01deg);
+  }
+}
+@keyframes fadeIn {
+  100% {
+    transform: scale(1.03);
+    opacity: 0;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

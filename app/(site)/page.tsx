@@ -27,8 +27,6 @@ export default async function Home() {
       </Header>
         <p className='font-semibold text-5xl py-8 px-8'>
           This is a protected route.
-          <UserButton afterSignOutUrl='/' />
-          <ModeToggle />
         </p>
       <div className='mt-2 mb-7 px-6'>
         <div className='flex justify-between items-center'>

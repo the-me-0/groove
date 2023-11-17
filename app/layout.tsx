@@ -3,6 +3,7 @@ import { Figtree } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/lib/components/theme-provider'
+import { dark,neobrutalism } from '@clerk/themes';
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -17,7 +18,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark
+      }}
+    >
       <html lang="en">
         <body className={font.className}>
         <ThemeProvider

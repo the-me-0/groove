@@ -7,6 +7,9 @@ import {RxCaretLeft, RxCaretRight} from 'react-icons/rx';
 import {HiHome} from 'react-icons/hi';
 import {BiSearch} from 'react-icons/bi';
 import Button from '@/lib/components/Button';
+import {UserButton} from '@clerk/nextjs';
+import {ModeToggle} from '@/lib/components/mode-toggle';
+import {dark, neobrutalism} from '@clerk/themes';
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -81,6 +84,13 @@ const Header: React.FC<HeaderProps> = ({
                                 Log in
                             </Button>
                         </div>
+                        { /* <ModeToggle /> */ }
+                        <UserButton
+                          afterSignOutUrl='/'
+                          appearance={{
+                              variables: { colorBackground: '#043427', colorPrimary: '#043427' }
+                          }}
+                        />
                     </>
                 </div>
             </div>
