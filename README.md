@@ -24,6 +24,7 @@ Project global advancement
 - [ ] invite link
 - [ ] YouTube integration
 - [ ] Mobile App
+- [ ] BONUS : discord rich presence integration
 
 ### Roadmap appendix
 
