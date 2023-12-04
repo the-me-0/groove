@@ -74,7 +74,7 @@ body,
 
 /* TARS LOGO */
 #tars-logo {
-  background-image: linear-gradient(120deg, #34e0f0 0%, #b400ff 100%); /* 065f46 / rgb(52, 156, 153) */
+  background-image: linear-gradient(120deg, #008170 0%, #005B41 100%); /* 065f46 / rgb(52, 156, 153) */
   border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
   width: min(40vw, 30rem);
   height: min(40vw, 30rem);
@@ -92,10 +92,10 @@ body,
   left: 0;
   top: 0;
   border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-  box-shadow: 5px 5px 89px rgba(0, 102, 255, 0.21); /* rgba(1, 64, 20, 0.21) */
+  box-shadow: 5px 5px 89px rgba(0, 91, 65, 0.21); /* rgba(1, 64, 20, 0.21) */
   will-change: border-radius, transform, opacity;
   animation-delay: 100ms;
-  background-image: linear-gradient(120deg, rgba(0, 67, 255, .55) 0%, rgba(0, 103, 255, .89) 100%); /* #015e34 / #014014 */
+  background-image: linear-gradient(120deg, rgba(35, 45, 63, .55) 0%, rgba(0, 129, 112, .89) 100%); /* #015e34 / #014014 */
   animation: morph 3s linear infinite;
   opacity: 0.21;
   animation-duration: 5s;

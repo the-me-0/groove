@@ -33,6 +33,14 @@ Project global advancement
 - YouTube integration: this functionality allows users to add music directly by searching it using YouTube, and automates the process to add the music to **Groove** from its link.
 - Mobile App: this step is a huge step, consisting of the creation of a **Groove** mobile application.
 
+## Colors, Logo, etc
+
+**Color palette**
+ - https://colorhunt.co/palette/0f0f0f232d3f005b41008170
+
+**Logo ;** *tiny redesign only*
+ - https://www.behance.net/gallery/183702371/Spotify-Redesign
+
 ## How to reproduce
 
 As this project is somewhat of a variant to the spotify clone course offered by Antonio,

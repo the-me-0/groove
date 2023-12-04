@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: groove-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: S3cret
+      POSTGRES_USER: groove_admin
+      POSTGRES_DB: groove
