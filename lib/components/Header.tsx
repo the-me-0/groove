@@ -9,7 +9,8 @@ import {BiSearch} from 'react-icons/bi';
 import Button from '@/lib/components/Button';
 import {UserButton} from '@clerk/nextjs';
 import {ModeToggle} from '@/lib/components/mode-toggle';
-import {dark, neobrutalism} from '@clerk/themes';
+import {neobrutalism} from '@clerk/themes';
+import {useModal} from "@/hooks/use-modal-store";
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -21,10 +22,7 @@ const Header: React.FC<HeaderProps> = ({
     className
 }) => {
     const router = useRouter();
-
-    const handleLogout = () => {
-        // Handle logout in the future
-    }
+    const { onOpen } = useModal();
 
     return (
         <div
@@ -68,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({
 
                 <div className='flex justify-between items-center gap-x-4'>
                     <>
-                        <div>
+                    {/* <div>
                             <Button
                                 onClick={() => {}}
                                 className='bg-transparent text-neutral-300 font-medium'
@@ -83,12 +81,28 @@ const Header: React.FC<HeaderProps> = ({
                             >
                                 Log in
                             </Button>
+                        </div> */}
+                        <div>
+                            <Button
+                                onClick={() => onOpen('example', {})}
+                                className='bg-transparent text-neutral-300 font-medium'
+                            >
+                                Get the android App
+                            </Button>
                         </div>
                         { /* <ModeToggle /> */ }
                         <UserButton
                           afterSignOutUrl='/'
                           appearance={{
-                              variables: { colorBackground: '#043427', colorPrimary: '#043427' }
+                              baseTheme: neobrutalism,
+                              userProfile: {
+                                  layout: { shimmer: true }
+                              },
+                              variables: {
+                                  colorBackground: '#005B41',
+                                  colorText: 'white',
+                                  colorPrimary: 'white' // transparent is also an option
+                              }
                           }}
                         />
                     </>

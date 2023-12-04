@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { Figtree } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-import { ThemeProvider } from '@/lib/components/theme-provider'
-import { dark,neobrutalism } from '@clerk/themes';
+import { ThemeProvider } from '@/lib/components/providers/theme-provider'
+import { dark } from '@clerk/themes';
+import ModalProvider from "@/lib/components/providers/ModalProvider";
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -25,14 +26,15 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={font.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          storageKey='groove-theme'
-        >
-          {children}
-        </ThemeProvider>
+          <ModalProvider />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey='groove-theme'
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

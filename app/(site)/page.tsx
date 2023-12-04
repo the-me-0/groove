@@ -1,8 +1,7 @@
 import Header from '@/lib/components/Header';
 import ListItem from '@/lib/components/ListItem';
-import { UserButton } from "@clerk/nextjs";
 import {initialProfile} from '@/lib/initial-profile';
-import {ModeToggle} from '@/lib/components/mode-toggle';
+import React from "react";
 
 export default async function Home() {
   const profile = await initialProfile();

@@ -12,8 +12,11 @@
     "@clerk/nextjs": "^4.27.1",
     "@clerk/themes": "^1.7.9",
     "@prisma/client": "^5.6.0",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.292.0",
@@ -23,7 +26,8 @@
     "react-dom": "^18",
     "react-icons": "^4.11.0",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/node": "^20",
