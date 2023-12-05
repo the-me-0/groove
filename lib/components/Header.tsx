@@ -97,9 +97,6 @@ const Header: React.FC<HeaderProps> = ({
                           afterSignOutUrl='/'
                           appearance={{
                               baseTheme: neobrutalism,
-                              userProfile: {
-                                  layout: { shimmer: true }
-                              },
                               variables: {
                                   colorBackground: '#005B41',
                                   colorText: 'white',
