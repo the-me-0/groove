@@ -2,14 +2,21 @@
 
 import {TbPlaylist} from 'react-icons/tb';
 import {AiOutlinePlus} from 'react-icons/ai';
-import {currentProfile} from "@/lib/current-profile";
 import {useUser} from "@/hooks/use-user";
+import {RedirectToSignIn} from "@clerk/nextjs";
+import {useModal} from "@/hooks/use-modal-store";
 
 const Library = () => {
-    const user = useUser();
+    const userInfo = useUser();
+    const { onOpen } = useModal();
 
     const onClick = () => {
         // Handle upload later
+        if (!userInfo.user) {
+            return <RedirectToSignIn />
+        }
+
+        onOpen('upload');
     }
 
     return (
