@@ -2,8 +2,12 @@
 
 import {TbPlaylist} from 'react-icons/tb';
 import {AiOutlinePlus} from 'react-icons/ai';
+import {currentProfile} from "@/lib/current-profile";
+import {useUser} from "@/hooks/use-user";
 
 const Library = () => {
+    const user = useUser();
+
     const onClick = () => {
         // Handle upload later
     }

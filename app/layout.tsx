@@ -5,6 +5,8 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/lib/components/providers/theme-provider'
 import { dark } from '@clerk/themes';
 import ModalProvider from "@/lib/components/providers/ModalProvider";
+import UserProvider from "@/lib/components/providers/UserProvider";
+import React from "react";
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -19,24 +21,26 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark
-      }}
-    >
-      <html lang="en">
-        <body className={font.className}>
-          <ModalProvider />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem={false}
-            storageKey='groove-theme'
-          >
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={font.className}>
+        <ClerkProvider
+            appearance={{
+              baseTheme: dark
+            }}
+        >
+          <UserProvider>
+            <ModalProvider />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem={false}
+              storageKey='groove-theme'
+            >
+              {children}
+            </ThemeProvider>
+          </UserProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   )
 }
