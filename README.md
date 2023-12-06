@@ -7,12 +7,12 @@
 - [Introduction](#introduction)
 - [Roadmap](#roadmap)
 - [How to reproduce](#how-to-reproduce)
-- [License](#license) add licence later
-- [Contact](#contact) add contact infos
+- [License](#license)
+- [Contact](#contact)
 
 ## Introduction
 
-**Groove** is vowed to be a private spotify-like application, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio »'s tutorial available [here](https://www.youtube.com/watch?v=2aeMRB8LL4o).
+**Groove** is vowed to be a private spotify-like application, nearly entirely self-hosted, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio »'s tutorial available [here](https://www.youtube.com/watch?v=2aeMRB8LL4o).
 
 ## Roadmap
 
