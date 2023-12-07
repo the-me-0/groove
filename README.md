@@ -21,8 +21,8 @@ Project global advancement
 - [x] Prisma & database setup
 - [x] Clerk setup (auth, user hook)
 - [ ] invite link `ongoing`
-- [ ] Song upload `ongoing`
-- [ ] Song fetching & list
+- [x] Song upload
+- [ ] Song fetching & list `ongoing`
 - [ ] Favorites functionality
 - [ ] Player functionality
 - [ ] Playlist/Album creation
