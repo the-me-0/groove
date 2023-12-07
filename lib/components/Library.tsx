@@ -5,6 +5,7 @@ import {AiOutlinePlus} from 'react-icons/ai';
 import {useUser} from "@/hooks/use-user";
 import {RedirectToSignIn} from "@clerk/nextjs";
 import {useModal} from "@/hooks/use-modal-store";
+import React from "react";
 
 const Library = () => {
     const userInfo = useUser();

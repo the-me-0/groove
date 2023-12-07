@@ -7,6 +7,7 @@ import { dark } from '@clerk/themes';
 import ModalProvider from "@/lib/components/providers/ModalProvider";
 import UserProvider from "@/lib/components/providers/UserProvider";
 import React from "react";
+import {Toaster} from "react-hot-toast";
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -36,6 +37,7 @@ export default function RootLayout({
               enableSystem={false}
               storageKey='groove-theme'
             >
+                <Toaster />
               {children}
             </ThemeProvider>
           </UserProvider>

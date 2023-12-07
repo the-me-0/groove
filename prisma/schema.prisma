@@ -30,8 +30,8 @@ model Song {
   id        String @id @default(uuid())
   name      String @unique
   imageUrl  String @db.Text
+  songUrl   String @db.Text
   artist    String
-  storageId String // song storage id in the file-server
 
   // The user that uploaded the song
   Profile   Profile @relation(fields: [profileId], references: [id])
