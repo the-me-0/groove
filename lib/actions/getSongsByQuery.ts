@@ -9,6 +9,7 @@ const getSongsByQuery = async (query: string): Promise<Song[]> => {
 
     // TODO - search is a security fault. Searching '*:' will cause postgresql error
     // I don't know how to fix that
+    // remove characters that are not numbers or letters ? Will that now be a problem for some songs ?
 
     // We have to detect spaces and replace them
     const splitQuery = query.split(' ');
