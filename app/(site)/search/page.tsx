@@ -2,7 +2,7 @@ import React from "react";
 import getSongsByQuery from "@/lib/actions/getSongsByQuery";
 import Header from "@/lib/components/Header";
 import SearchInput from "@/lib/components/SearchInput";
-import SearchContent from "./components/SearchContent";
+import SearchContent from "../../../lib/components/SearchContent";
 
 export const revalidate = 0;
 

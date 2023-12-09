@@ -3,7 +3,7 @@ import ListItem from '@/lib/components/ListItem';
 import {initialProfile} from '@/lib/initial-profile';
 import React from "react";
 import getSongs from "@/lib/actions/getSongs";
-import PageContent from './components/PageContent';
+import PageContent from '../../lib/components/PageContent';
 
 // prevents this page to be cached, in order for it to always be up-to-date
 export const revalidate = 0;
