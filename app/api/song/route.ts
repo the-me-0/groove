@@ -26,15 +26,15 @@ export async function POST(req: NextRequest) {
         const uploadTag = `${author.replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
 
         // -- Song Save
-        const uploadSongLocation = `./public/songs/${uploadTag}.mp3`;
+        const uploadSongLocation = `/songs/${uploadTag}.mp3`;
         const songData = await songFile.arrayBuffer();
-        fs.writeFileSync(uploadSongLocation, Buffer.from(songData));
+        fs.writeFileSync('./public' + uploadSongLocation, Buffer.from(songData));
 
         // -- Image Save
         let imageNameSliced = imageFile.name.split('.');
-        const uploadImageLocation = `./public/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
+        const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
         const imageData = await imageFile.arrayBuffer();
-        fs.writeFileSync(uploadImageLocation, Buffer.from(imageData));
+        fs.writeFileSync('./public' + uploadImageLocation, Buffer.from(imageData));
 
         await db.song.create({
             data: {

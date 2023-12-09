@@ -6,8 +6,16 @@ import {useUser} from "@/hooks/use-user";
 import {RedirectToSignIn} from "@clerk/nextjs";
 import {useModal} from "@/hooks/use-modal-store";
 import React from "react";
+import {Song} from "@prisma/client";
+import MediaItem from "@/lib/components/MediaItem";
 
-const Library = () => {
+interface LibraryProps {
+    songs: Song[];
+}
+
+const Library: React.FC<LibraryProps> = ({
+    songs
+}) => {
     const userInfo = useUser();
     const { onOpen } = useModal();
 
@@ -38,7 +46,13 @@ const Library = () => {
                 />
             </div>
             <div className='flex flex-col gap-y-2 mt-4 px-3'>
-                List of Songs!
+                {songs.map((song) => (
+                    <MediaItem
+                        onClick={() => {}}
+                        key={song.id}
+                        song={song}
+                    />
+                ))}
             </div>
         </div>
     )

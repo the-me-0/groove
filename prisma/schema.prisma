@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -41,6 +42,9 @@ model Song {
   LikesOnSongs     LikesOnSongs[] // likes on this song
   SongsOnPlaylists SongsOnPlaylists[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([profileId])
 }
 
@@ -64,6 +68,9 @@ model Playlist {
   LikesOnPlaylists LikesOnPlaylists[]
   SongsOnPlaylists SongsOnPlaylists[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([profileId])
 }
 
@@ -76,6 +83,8 @@ model LikesOnSongs {
   profileId  String // relation scalar field (used in the `@relation` attribute above)
   assignedAt DateTime @default(now())
 
+  createdAt DateTime @default(now())
+
   @@id([songId, profileId])
 }
 
@@ -86,6 +95,8 @@ model LikesOnPlaylists {
   profileId  String // relation scalar field (used in the `@relation` attribute above)
   assignedAt DateTime @default(now())
 
+  createdAt DateTime @default(now())
+
   @@id([playlistId, profileId])
 }
 
@@ -95,6 +106,8 @@ model SongsOnPlaylists {
   playlist   Playlist @relation(fields: [playlistId], references: [id])
   playlistId String
   assignedAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
 
   @@id([playlistId, songId])
 }

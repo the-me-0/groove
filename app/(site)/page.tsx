@@ -2,9 +2,15 @@ import Header from '@/lib/components/Header';
 import ListItem from '@/lib/components/ListItem';
 import {initialProfile} from '@/lib/initial-profile';
 import React from "react";
+import getSongs from "@/lib/actions/getSongs";
+import PageContent from './components/PageContent';
+
+// prevents this page to be cached, in order for it to always be up-to-date
+export const revalidate = 0;
 
 export default async function Home() {
-  const profile = await initialProfile();
+  await initialProfile(); // We don't need the returned value there, but we still need to generate an account for new users
+  const songs = await getSongs();
 
   return (
     <div className='bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto'>
@@ -28,9 +34,7 @@ export default async function Home() {
             Newest songs
           </h1>
         </div>
-        <div>
-          List of Songs!
-        </div>
+        <PageContent songs={songs} />
       </div>
     </div>
   )
