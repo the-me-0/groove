@@ -67,7 +67,7 @@ I will, in the future, produce a documentation / guide on how to develop this ap
 
 ## license
 
-This project is not yet under license.
+This project is under the [MIT Licence](https://opensource.org/license/mit/).
 
 ## Contact
 
