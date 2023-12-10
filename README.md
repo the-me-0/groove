@@ -22,9 +22,10 @@ Project global advancement
 - [x] Clerk setup (auth, user hook)
 - [ ] invite link `ongoing`
 - [x] Song upload
-- [ ] Song fetching & list `ongoing`
-- [ ] Favorites functionality
-- [ ] Player functionality
+- [x] Song fetching & list
+- [x] Favorites functionality
+- [x] Player functionality
+- [ ] ~~ Overall review before **Beta 0.1** `ongoing`
 - [ ] Playlist/Album creation
 - [ ] YouTube integration - ytb link to mp3 automation
 - [ ] Mobile App (PWA)
