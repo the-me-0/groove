@@ -3,6 +3,7 @@
 import {Song} from "@prisma/client";
 import React from "react";
 import SongItem from "@/lib/components/SongItem";
+import useOnPlay from "@/hooks/use-on-play";
 
 interface PageContentProps {
     songs: Song[];
@@ -11,6 +12,8 @@ interface PageContentProps {
 const PageContent: React.FC<PageContentProps> = ({
     songs
 }) => {
+    const onPlay = useOnPlay(songs);
+
     if (songs.length === 0) {
         return (
             <div className='mt-4 text-neutral-400'>
@@ -36,7 +39,7 @@ const PageContent: React.FC<PageContentProps> = ({
             {songs.map((song) => (
                 <SongItem
                     key={song.id}
-                    onClick={() => {}}
+                    onClick={(id) => onPlay(id)}
                     song={song}
                 />
             ))}

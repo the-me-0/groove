@@ -26,8 +26,6 @@ const getSongsByQuery = async (query: string): Promise<Song[]> => {
         }
     });
 
-
-
     const songs = await db.song.findMany({
         where: {
             OR: [{

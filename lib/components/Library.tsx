@@ -8,6 +8,7 @@ import {useModal} from "@/hooks/use-modal-store";
 import React from "react";
 import {Song} from "@prisma/client";
 import MediaItem from "@/lib/components/MediaItem";
+import useOnPlay from "@/hooks/use-on-play";
 
 interface LibraryProps {
     songs: Song[];
@@ -18,6 +19,8 @@ const Library: React.FC<LibraryProps> = ({
 }) => {
     const userInfo = useUser();
     const { onOpen } = useModal();
+
+    const onPlay = useOnPlay(songs);
 
     const onClick = () => {
         // Handle upload later
@@ -48,7 +51,7 @@ const Library: React.FC<LibraryProps> = ({
             <div className='flex flex-col gap-y-2 mt-4 px-3'>
                 {songs.map((song) => (
                     <MediaItem
-                        onClick={() => {}}
+                        onClick={(id: string) => onPlay(id)}
                         key={song.id}
                         song={song}
                     />
