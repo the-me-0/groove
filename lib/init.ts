@@ -4,6 +4,10 @@ import { ApiKey } from "@prisma/client";
 export default async function init() {
     console.log("💿 Welcome to GROOVE !");
 
+    /*
+        // Does not work : https://github.com/prisma/prisma/issues/20566#issuecomment-1840217099
+        // Prisma doesn't work in edge environments
+
     let apiKey: ApiKey | null = await db.apiKey.findFirst({});
 
     if (!apiKey) {
@@ -27,4 +31,5 @@ export default async function init() {
     }
 
     console.log('  ~ ApiKey', apiKey?.value);
+    */
 }
