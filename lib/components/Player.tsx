@@ -14,19 +14,14 @@ const Player = () => {
         return null;
     }
 
-    const handleMobileOnOpen = () => {
-        setIsMobilePlayerOpen(!isMobilePlayerOpen)
-    }
-
     return (
         <div
-            className={`fixed bottom-0 bg-black w-full py-2 h-[80px] px-4 ${ isMobilePlayerOpen && 'h-full'} md:h-[80px]`}
+            className={`fixed bottom-0 bg-black w-full py-2 h-[80px] px-4 ${ player.bigPicture && 'h-full'} md:h-[80px]`}
         >
             {/* PlayerContent has a key value as if the key changes, it re-renders */}
             <PlayerContent
                 key={song.songUrl}
                 song={song}
-                handleMobileOnOpen={handleMobileOnOpen}
             />
         </div>
     );

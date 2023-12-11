@@ -12,13 +12,11 @@ import usePlayer from "@/hooks/use-player";
 import useSound from 'use-sound';
 
 interface PlayerContentProps {
-    song: Song,
-    handleMobileOnOpen: () => void
+    song: Song
 }
 
 const PlayerContent: React.FC<PlayerContentProps> = ({
-    song,
-    handleMobileOnOpen
+    song
 }) => {
     const player = usePlayer();
     const [volume, setVolume] = useState(1);
@@ -106,7 +104,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         <div className='flex md:grid md:grid-cols-3 h-full'>
             <div
                 className='flex w-full justify-start'
-                onClick={handleMobileOnOpen}
+                onClick={player.toggleBigPicture}
             >
                 <div className='flex items-center gap-x-4'>
                     <MediaItem song={song} onClick={() => {}} />
