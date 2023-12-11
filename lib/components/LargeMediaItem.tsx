@@ -22,7 +22,16 @@ const LargeMediaItem: React.FC<LargeMediaItemProps> = ({
                 <Image
                     fill
                     src={song.imageUrl || "/images/music-placeholder.png"}
-                    alt="MediaItem"
+                    alt="LargeMediaItem"
+                    className="object-cover"
+                />
+            </div>
+            {/* Image blur, fade */}
+            <div className='absolute rounded-full blur-3xl -z-20 inset-0 m-[15vw]'>
+                <Image
+                    fill
+                    src={song.imageUrl || "/images/music-placeholder.png"}
+                    alt="LargeMediaItemBlur"
                     className="object-cover"
                 />
             </div>

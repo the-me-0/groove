@@ -1,7 +1,7 @@
 'use client';
 
 import { Song } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import MediaItem from "@/lib/components/MediaItem";
 import LikeButton from "@/lib/components/LikeButton";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
@@ -22,6 +22,9 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     const player = usePlayer();
     const [volume, setVolume] = useState(1);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [songProgress, setSongProgress] = useState(0);
+    const [isMovingProgressBar, setIsMovingProgressBar] = useState(false);
+    const [songProgressBar, setSongProgressBar] = useState(0);
 
     const Icon = isPlaying ? Pause : Play;
     const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
@@ -60,7 +63,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
 
     // As the useSound hook does not refresh if the song.songUrl is changed,
     //   we need the key attribute to be defined on songUrl on this PlayerContent component.
-    const [play, { pause, sound }] = useSound(
+    const [play, { pause, sound, duration }] = useSound(
         song.songUrl,
         {
             volume,
@@ -78,9 +81,26 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         // Play the song as soon as this component is mounted
         sound?.play();
 
+        let timeOutId: NodeJS.Timeout;
+
+        const songProgressRunner = () => {
+            timeOutId = setTimeout(() => {
+                console.log('Running...', sound !== null);
+                if (sound) {
+                    setSongProgress(Math.round(sound.seek()));
+                }
+                songProgressRunner();
+            }, 1000);
+        }
+
+        sound?.once('play', () => {
+           songProgressRunner();
+        })
+
         // Removes the song on unmount
         return () => {
             sound?.unload();
+            if (timeOutId) clearTimeout(timeOutId);
         }
     }, [sound]);
 
@@ -92,6 +112,25 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         }
     };
 
+    const handleProgressChange = (value: number[]) => {
+        setIsMovingProgressBar(true);
+        setSongProgressBar(Math.round(value[0]));
+    }
+
+    const handleProgressCommit = (value: number[]) => {
+        if (sound !== null) {
+            sound.seek(value[0]);
+        }
+        setIsMovingProgressBar(false);
+    }
+
+    // Updates the position of the song progress if it's not being moved by user
+    useEffect(() => {
+        if (!isMovingProgressBar) {
+            setSongProgressBar(songProgress);
+        }
+    }, [songProgress, isMovingProgressBar]);
+
     const toggleMute = () => {
         if (volume === 0) {
             setVolume(1);
@@ -101,8 +140,12 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         }
     }
 
+    // TODO - fade-in time slider 0-5s + implementation https://www.npmjs.com/package/use-sound#escape-hatches
+
+    // TODO - loop option ->  sound.loop(<boolean>);
+
     return (
-        <div className={`flex ${player.bigPicture && 'flex-col'} md:grid md:grid-cols-3 h-full`}>
+        <div className={`flex ${player.bigPicture && 'flex-col items-center'} md:grid md:grid-cols-3 h-full`}>
 
             {/* Desktop song display */}
             <div
@@ -135,6 +178,21 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             </div>
 
             {/* Mobile controller */}
+            {player.bigPicture && (
+                <div className='flex 2xs:w-[368px] md:hidden justify-between w-full'>
+                    <p className='w-8'>{String(songProgress/60).split('.')[0]}:{String(songProgress%60).length === 1 ? '0' + songProgress%60 : songProgress%60}</p>
+                    <Slider
+                        defaultValue={[0]}
+                        value={[songProgressBar]}
+                        onValueChange={(value) => handleProgressChange(value)}
+                        onValueCommit={(value) => handleProgressCommit(value)}
+                        step={duration/100000}
+                        max={duration/1000}
+                        className='mx-2'
+                    />
+                    <p className='w-8'>{String(duration/60000).split('.')[0]}:{String((duration/1000)%60).length === 1 ? '0' + String((duration/1000)%60).split('.')[0] : String((duration/1000)%60).split('.')[0] || '0:00'}</p>
+                </div>
+            )}
             <div className={`flex md:hidden col-auto w-fit justify-end items-center ${player.bigPicture && 'w-full justify-center'}`}>
                 {!player.bigPicture && (
                     <LikeButton songId={song.id} className='p-3' size={32}/>
