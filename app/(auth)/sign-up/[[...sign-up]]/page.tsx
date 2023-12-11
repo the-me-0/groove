@@ -7,47 +7,46 @@ import axios from "axios";
 import {Loader2} from "lucide-react";
 
 export default function Page() {
-  const searchParams = useSearchParams();
-  const [isTreated, setIsTreated] = useState(false);
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [isRedirected, setIsRedirected] = useState(false);
+    const searchParams = useSearchParams();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
 
-  const verifyEmailBypass = usePathname() === '/sign-up/verify-email-address';
+    const verifyEmailBypass = usePathname() === '/sign-up/verify-email-address';
+    const inviteLinkValue = searchParams.get('invite-link');
 
-  const inviteLinkValue = searchParams.get('invite-link');
+    useEffect(() => {
+        if (verifyEmailBypass) return;
+        if (inviteLinkValue === null) {
+            setIsValid(false);
+            return;
+        }
 
-  useEffect(() => {
-    axios.get(`api/invite-link/${inviteLinkValue}`)
-        .then((response) => {
-          if (response.status !== 200) {
-            setIsInvalid(true);
-          }
-        })
-        .catch((error) => {
-          setIsInvalid(true);
-          console.log(error);
-        })
-        .finally(() => setIsTreated(true))
-  }, [inviteLinkValue]);
+        console.log('Checking if valid invite-link...');
+        setIsLoading(true);
+        axios.get(`api/invite-link/${inviteLinkValue}`)
+            .then((response) => {
+                // if the server responds anything else than a 200, means invite link is wrong
+                if (response.status !== 200) setIsValid(false);
+                else setIsValid(true);
+            })
+            .catch((error) => {
+                setIsValid(false);
+                console.log(error);
+            })
+            .finally(() => setIsLoading(false))
+    }, [inviteLinkValue, verifyEmailBypass]);
 
-  if (!verifyEmailBypass && (!inviteLinkValue || isInvalid)) {
-    setTimeout(() => {
-      setIsRedirected(true);
-    }, 5000);
+    if (isLoading) {
+        return (
+            <Loader2 className={'animate-spin text-zinc-500 w-10 h-10'}/>
+        );
+    }
 
-    return (
-        <div>
-          <p>Please provide a valid invite link. You will be redirected to the sign-in page soon.</p>
-          {isRedirected && (<RedirectToSignIn />)}
-        </div>
-    );
-  }
+    if (!verifyEmailBypass && isValid === false) {
+        console.log('You tried to access the sign-up page with an invalid or no invite link. You\'ve been redirected to sign-in page.');
 
-  if (!isTreated) {
-    return (
-        <Loader2 className={'animate-spin text-zinc-500 w-10 h-10'}/>
-    );
-  }
+        return <RedirectToSignIn />;
+    }
 
-  return <SignUp />;
+    return <SignUp />;
 }

@@ -4,9 +4,9 @@ import { authMiddleware } from "@clerk/nextjs";
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-  ignoredRoutes: ['^/api/invite-link$', '^/api/invite-link/([^/]+?)$']
+  ignoredRoutes: ['/api/invite-link', '/api/invite-link/:path']
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", '/api((?!\\/invite-link(?:\\/[^\\/]+?)?$))/gm', "/songs/:path*"]
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", '/api/:path*', "/songs/:path*"]
 };
