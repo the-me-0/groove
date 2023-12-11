@@ -27,7 +27,7 @@ Project global advancement
 - [x] Player functionality
 - [ ] ~~ Overall review before **Beta 0.1** `ongoing`
 - [ ] Playlist/Album creation
-- [ ] Player update - shuffle, loop, queue display
+- [ ] Player update - shuffle, loop, queue display, song duration & song progress (+ set playing second ?)
 - [ ] Spotify integration - song upload using spotify-down
 - [ ] Mobile App (PWA)
 - [ ] BONUS : discord rich presence integration
