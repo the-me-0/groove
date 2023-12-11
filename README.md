@@ -20,7 +20,7 @@ Project global advancement
 - [x] Project global structure
 - [x] Prisma & database setup
 - [x] Clerk setup (auth, user hook)
-- [ ] invite link `ongoing`
+- [x] invite link
 - [x] Song upload
 - [x] Song fetching & list
 - [x] Favorites functionality
