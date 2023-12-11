@@ -2,8 +2,6 @@
 
 import { Song } from "@prisma/client";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/use-user";
 import MediaItem from "@/lib/components/MediaItem";
 import LikeButton from "@/lib/components/LikeButton";
 import useOnPlay from "@/hooks/use-on-play";
@@ -24,6 +22,8 @@ const LikedContent: React.FC<LikedContentProps> = ({
             </div>
         );
     }
+
+    // TODO - removed a like ? update the player to remove the id
 
     return (
         <div className='flex flex-col gap-y-2 w-full p-6'>

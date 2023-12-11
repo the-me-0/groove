@@ -27,7 +27,8 @@ Project global advancement
 - [x] Player functionality
 - [ ] ~~ Overall review before **Beta 0.1** `ongoing`
 - [ ] Playlist/Album creation
-- [ ] YouTube integration - ytb link to mp3 automation
+- [ ] Player update - shuffle, loop, queue display
+- [ ] Spotify integration - song upload using spotify-down
 - [ ] Mobile App (PWA)
 - [ ] BONUS : discord rich presence integration
 
