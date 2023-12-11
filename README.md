@@ -62,6 +62,19 @@ This project has never been deployed anywhere, and thus no guide exists on how t
 **Logo ;** *tiny redesign only*
  - https://www.behance.net/gallery/183702371/Spotify-Redesign
 
+## Start-up
+
+- To start the project, go in your *projects/* folder, clone this repository using `git clone https://github.com/the-me-0/groove.git`.
+- Move to the newly created folder (`cd groove`), create a copy of the "*.env.example*" file and rename it "*.env*".
+- You now have to complete your "*.env*" file with your infos, being your clerk keys & an ApiKey (you can generate a password [here](https://www.lastpass.com/fr/features/password-generator#generatorTool) but I advise you not to include special characters to avoid issues.)
+- When you environment file is complete, run `docker compose up -d`, `pnx prisma generate`, `pnx prisma migrate dev` (name the migration whatever you want, like "main").
+- You are now ready to run you project with `npm run dev` !
+
+### Once up
+You will now need to generate an invitation link in order to create your first user.
+To do so, you have to send this post request : `curl -X POST "http://localhost:3000/api/invite-link?api-key=<replace-me>"`
+**Watch-out : an invite-link is only valid once. You will have to recreate one if you want to create another user.**
+
 ## How to reproduce
 
 As this project is a fork to the spotify clone course offered by Antonio,

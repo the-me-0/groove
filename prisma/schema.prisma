@@ -11,17 +11,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ApiKey {
+  id      String @id @default(uuid())
+  value   String @default(uuid())
+  createdAt   DateTime @default(now())
+}
+
 model Profile {
   id       String @id @default(uuid())
   userId   String @unique
-  name     String
+  name     String @unique
   imageUrl String @db.Text
   email    String @db.Text
 
-  playlists      Playlist[] // The song the user has uploaded
-  songs          Song[] // The playlist the user has created
-  likedPlaylists LikesOnPlaylists[]
-  likedSongs     LikesOnSongs[]
+  playlists       Playlist[] // The song the user has uploaded
+  songs           Song[] // The playlist the user has created
+  likedPlaylists  LikesOnPlaylists[]
+  likedSongs      LikesOnSongs[]
+  inviteLinks     InviteLink[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -110,4 +117,16 @@ model SongsOnPlaylists {
   createdAt DateTime @default(now())
 
   @@id([playlistId, songId])
+}
+
+model InviteLink {
+  id        String    @id @default(uuid())
+  profileId String?
+  profile   Profile?  @relation(fields: [profileId], references: [id])
+  value     String    @unique @default(uuid())
+
+  createdAt DateTime  @default(now())
+  expiresAt DateTime  @default(dbgenerated("NOW() + interval '1 day'"))
+
+  @@index([profileId])
 }
