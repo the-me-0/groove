@@ -3,30 +3,22 @@
 import Image from "next/image";
 import { Song } from '@prisma/client';
 import React from "react";
+import LikeButton from "@/lib/components/LikeButton";
 
-interface MediaItemProps {
+interface LargeMediaItemProps {
     song: Song;
-    onClick?: (id: string) => void;
 }
 
-const LargeMediaItem: React.FC<MediaItemProps> = ({
-                                                 song,
-                                                 onClick
-                                             }) => {
-    const handleClick = () => {
-        if (onClick) {
-            return onClick(song.id);
-        }
-
-        // set the music to this one (player)
-    };
-
+const LargeMediaItem: React.FC<LargeMediaItemProps> = ({
+    song
+}) => {
     return (
         <div
-            onClick={handleClick}
-            className='flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md'
+            className='flex flex-col items-center gap-y-3 w-full h-full hover:bg-gray-800/50 p-2 mb-4'
         >
-            <div className='relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden'>
+            <div
+                className='relative rounded-md overflow-hidden mt-[10vw] min-h-[90vw] min-w-[90vw] 2xs:min-h-[70vw] 2xs:min-w-[70vw] xs:min-h-[60vw] xs:min-w-[60vw] xs:mt-[5vw] sm:min-h-[385px] sm:min-w-[385px] sm:mt-0'
+            >
                 <Image
                     fill
                     src={song.imageUrl || "/images/music-placeholder.png"}
@@ -34,12 +26,16 @@ const LargeMediaItem: React.FC<MediaItemProps> = ({
                     className="object-cover"
                 />
             </div>
-            <div className="flex flex-col gap-y-1 overflow-hidden">
-                <p className="text-white truncate">{song.name}</p>
-                <p className="text-neutral-400 text-sm truncate">
-                    By {song.artist}
-                </p>
+            <div className='flex justify-between items-center w-[90vw] 2xs:w-[70vw] xs:w-[60vw] sm:w-[385px]'>
+                <div className="flex flex-col gap-y-1 overflow-hidden">
+                    <p className="text-white truncate">{song.name}</p>
+                    <p className="text-neutral-400 text-sm truncate">
+                        By {song.artist}
+                    </p>
+                </div>
+                <LikeButton size={30} songId={song.id} />
             </div>
+
         </div>
     );
 }
