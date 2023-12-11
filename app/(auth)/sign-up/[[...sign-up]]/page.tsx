@@ -48,5 +48,13 @@ export default function Page() {
         return <RedirectToSignIn />;
     }
 
-    return <SignUp />;
+    return (
+        <SignUp
+            appearance={{
+                elements: {
+                    footerAction: 'hidden'
+                },
+            }}
+        />
+    );
 }

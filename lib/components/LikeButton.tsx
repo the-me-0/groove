@@ -7,13 +7,18 @@ import { toast } from 'react-hot-toast';
 
 import { useUser } from '@/hooks/use-user';
 import axios from "axios";
+import {twMerge} from "tailwind-merge";
 
 interface LikeButtonProps {
     songId: string;
+    size?: number;
+    className?: string;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({
-    songId
+    songId,
+    size,
+    className
 }) => {
     const router = useRouter();
 
@@ -60,10 +65,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 
     return (
         <button
-            className='cursor-pointer hover:opacity-75 transition'
+            className={twMerge('cursor-pointer hover:opacity-75 transition', className)}
             onClick={handleLike}
         >
-            <Icon color={isLiked ? '#22c55e' : 'white'} size={25} />
+            <Icon color={isLiked ? '#22c55e' : 'white'} size={size || 25} />
         </button>
     );
 }

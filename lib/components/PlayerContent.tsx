@@ -12,11 +12,13 @@ import usePlayer from "@/hooks/use-player";
 import useSound from 'use-sound';
 
 interface PlayerContentProps {
-    song: Song
+    song: Song,
+    handleMobileOnOpen: () => void
 }
 
 const PlayerContent: React.FC<PlayerContentProps> = ({
-    song
+    song,
+    handleMobileOnOpen
 }) => {
     const player = usePlayer();
     const [volume, setVolume] = useState(1);
@@ -101,16 +103,20 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     }
 
     return (
-        <div className='grid grid-cols-2 md:grid-cols-3 h-full'>
-            <div className='flex w-full justify-start'>
+        <div className='flex md:grid md:grid-cols-3 h-full'>
+            <div
+                className='flex w-full justify-start'
+                onClick={handleMobileOnOpen}
+            >
                 <div className='flex items-center gap-x-4'>
                     <MediaItem song={song} onClick={() => {}} />
-                    <LikeButton songId={song.id} />
+                    <LikeButton songId={song.id} className={'hidden md:block'} />
                 </div>
             </div>
 
             {/* Mobile controller */}
-            <div className='flex md:hidden col-auto w-full justify-end items-center'>
+            <div className='flex md:hidden col-auto w-fit justify-end items-center'>
+                <LikeButton songId={song.id} className='p-3' size={32} />
                 <div
                     onClick={handlePlay}
                     className='h-10 w-10 flex items-center justify-center rounded-full bg-white p-1 cursor-pointer'
