@@ -20,6 +20,7 @@ const LargeMediaItem: React.FC<LargeMediaItemProps> = ({
                 className='relative rounded-md overflow-hidden mt-[10vw] min-h-[90vw] min-w-[90vw] 2xs:min-h-[70vw] 2xs:min-w-[70vw] xs:min-h-[60vw] xs:min-w-[60vw] xs:mt-[5vw] sm:min-h-[385px] sm:min-w-[385px] sm:mt-0'
             >
                 <Image
+                    sizes='100%'
                     fill
                     src={song.imageUrl || "/images/music-placeholder.png"}
                     alt="LargeMediaItem"
@@ -29,6 +30,7 @@ const LargeMediaItem: React.FC<LargeMediaItemProps> = ({
             {/* Image blur, fade */}
             <div className='absolute rounded-full blur-3xl -z-20 inset-0 m-[15vw]'>
                 <Image
+                    sizes='100%'
                     fill
                     src={song.imageUrl || "/images/music-placeholder.png"}
                     alt="LargeMediaItemBlur"
