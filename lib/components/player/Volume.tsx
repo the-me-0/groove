@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {HiSpeakerWave, HiSpeakerXMark} from "react-icons/hi2";
 import {Slider} from "@/lib/shadcn-components/ui/slider";
-import usePlayer from "@/hooks/use-player";
+import usePlayer from "@/hooks/player/use-player";
 
 const Volume: React.FC = () => {
     const player = usePlayer();

@@ -1,5 +1,5 @@
 import { Song } from "@prisma/client";
-import usePlayer from "@/hooks/use-player";
+import usePlayer from "@/hooks/player/use-player";
 
 const useOnPlay = (songs: Song[], source: string) => {
     const player = usePlayer();

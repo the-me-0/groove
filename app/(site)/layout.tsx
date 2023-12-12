@@ -1,7 +1,7 @@
 import Sidebar from '@/lib/components/Sidebar';
 import React from "react";
 import getSongsByProfileId from "@/lib/actions/getSongsByProfileId";
-import Player from '@/lib/components/Player';
+import Player from '@/lib/components/player/Player';
 
 export const revalidate = 0;
 
