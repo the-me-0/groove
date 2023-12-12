@@ -76,7 +76,7 @@ export async function GET(
         });
 
         if (!like) {
-            return new NextResponse('No favorite between this user and this song', { status: 404 });
+            return new NextResponse('Not liked', { status: 200 });
         }
 
         return NextResponse.json(like);

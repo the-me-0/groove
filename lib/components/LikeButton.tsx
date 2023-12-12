@@ -22,14 +22,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 }) => {
     const router = useRouter();
 
-    const [isLiked, setIsLiked] = useState<boolean>(false);
+    const [isLiked, setIsLiked] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/song/${songId}/like`);
 
-                if (response.status === 200 && response.data) {
+                if (response.status === 200 && response.data !== 'Not liked') {
                     setIsLiked(true);
                 }
             } catch (error) {/* Error is usually because the get request can throw a 404 */}
