@@ -4,7 +4,6 @@ import { Song } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import MediaItem from "@/lib/components/MediaItem";
 import LikeButton from "@/lib/components/LikeButton";
-import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { Slider } from "@/lib/shadcn-components/ui/slider";
 import usePlayer from "@/hooks/use-player";
 import useSound from 'use-sound';
@@ -12,6 +11,7 @@ import LargeMediaItem from "@/lib/components/LargeMediaItem";
 import {ChevronDown, Pause, Play, Repeat2, Share2, SkipBack, SkipForward} from "lucide-react";
 import toast from "react-hot-toast";
 import useClock from "@/hooks/use-clock";
+import Volume from "@/lib/components/player/Volume";
 
 interface PlayerContentProps {
     song: Song
@@ -27,7 +27,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
 }) => {
     const player = usePlayer();
     const clock = useClock();
-    const [volume, setVolume] = useState(1);
+
     const [isPlaying, setIsPlaying] = useState(false);
 
     const [skip, setSkip] = useState<Skip>({ skip: false, forced: false });
@@ -37,7 +37,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     const [songProgressBar, setSongProgressBar] = useState(0);
 
     const Icon = isPlaying ? Pause : Play;
-    const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
     // new onPlayNext
     useEffect(() => {
@@ -86,7 +85,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     const [play, { pause, sound, duration }] = useSound(
         song.songUrl,
         {
-            volume,
+            volume: player.volume,
             onplay: () => setIsPlaying(true),
             onend: () => {
                 setIsPlaying(false);
@@ -133,15 +132,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             setSongProgressBar(Math.round(sound.seek()));
         }
     }, [sound, isMovingProgressBar, clock]);
-
-    const toggleMute = () => {
-        if (volume === 0) {
-            setVolume(1);
-        } else {
-            // TODO - make toggle remember what was the volume before mute (if there was one)
-            setVolume(0);
-        }
-    }
 
     const toggleOnRepeat = () => {
         const newOnRepeatValue = !onRepeat;
@@ -228,7 +218,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                         />
                         <Repeat2
                             size={30}
-                            className={`text-neutral-400 cursor-pointer transition mx-4 ${onRepeat && 'text-[#22c55e]'}`}
+                            className={`text-neutral-400 cursor-pointer transition mx-4 ${onRepeat && 'text-[#22C55E]'}`}
                             onClick={toggleOnRepeat}
                         />
                     </>
@@ -256,21 +246,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             </div>
 
             <div className='hidden md:flex w-full justify-end pr-2'>
-                <div className='flex items-center gap-x-2 w-[120px]'>
-                    <VolumeIcon
-                        onClick={toggleMute}
-                        className='cursor-pointer'
-                        size={34}
-                    />
-                    <Slider
-                        defaultValue={[1]}
-                        value={[volume]}
-                        onValueChange={(value) => setVolume(value[0])}
-                        max={1}
-                        step={0.1}
-                        aria-label='Volume'
-                    />
-                </div>
+                <Volume />
             </div>
         </div>
     );
