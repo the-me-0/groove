@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import {number} from "prop-types";
 
 interface PlayerStore {
     ids: string[];
@@ -11,7 +10,7 @@ interface PlayerStore {
     reset: () => void;
     bigPicture: boolean;
     toggleBigPicture: () => void;
-    setFadeTime: (value: number) => void;
+    setFadeTime: (fadeTime: number) => void;
 }
 
 const usePlayer = create<PlayerStore>((set, getState) => ({

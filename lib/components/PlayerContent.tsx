@@ -1,7 +1,7 @@
 'use client';
 
 import { Song } from "@prisma/client";
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import MediaItem from "@/lib/components/MediaItem";
 import LikeButton from "@/lib/components/LikeButton";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
@@ -9,41 +9,61 @@ import { Slider } from "@/lib/shadcn-components/ui/slider";
 import usePlayer from "@/hooks/use-player";
 import useSound from 'use-sound';
 import LargeMediaItem from "@/lib/components/LargeMediaItem";
-import {ChevronDown, Pause, Play, Share2, SkipBack, SkipForward} from "lucide-react";
+import {ChevronDown, Pause, Play, Repeat2, Share2, SkipBack, SkipForward} from "lucide-react";
 import toast from "react-hot-toast";
+import useClock from "@/hooks/use-clock";
 
 interface PlayerContentProps {
     song: Song
+}
+
+interface Skip {
+    skip: boolean;
+    forced?: boolean;
 }
 
 const PlayerContent: React.FC<PlayerContentProps> = ({
     song
 }) => {
     const player = usePlayer();
+    const clock = useClock();
     const [volume, setVolume] = useState(1);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [songProgress, setSongProgress] = useState(0);
+
+    const [skip, setSkip] = useState<Skip>({ skip: false, forced: false });
+    const [onRepeat, setOnRepeat] = useState(false);
+
     const [isMovingProgressBar, setIsMovingProgressBar] = useState(false);
     const [songProgressBar, setSongProgressBar] = useState(0);
 
     const Icon = isPlaying ? Pause : Play;
     const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
-    const onPlayNext = () => {
+    // new onPlayNext
+    useEffect(() => {
+        if (!skip.skip) return;
+
         if (player.ids.length === 0) {
+            setSkip({ skip: false });
             return;
         }
 
-        const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-        const nextSong = player.ids[currentIndex + 1];
+        if (onRepeat && !skip?.forced) {
+            handlePlay();
+        } else {
+            const currentIndex = player.ids.findIndex((id) => id === player.activeId);
+            const nextSong = player.ids[currentIndex + 1];
 
-        if (!nextSong) {
-            // Go back to start of the queue
-            return player.setId(player.ids[0]);
+            if (!nextSong) {
+                // Go back to start of the queue
+                player.setId(player.ids[0]);
+            } else {
+                player.setId(nextSong);
+            }
         }
 
-        player.setId(nextSong);
-    }
+        setSkip({ skip: false });
+    }, [skip, onRepeat]);
 
     const onPlayPrevious = () => {
         if (player.ids.length === 0) {
@@ -70,7 +90,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             onplay: () => setIsPlaying(true),
             onend: () => {
                 setIsPlaying(false);
-                onPlayNext();
+                setSkip({ skip: true });
             },
             onpause: () => setIsPlaying(false),
             format: ['mp3']
@@ -81,26 +101,9 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         // Play the song as soon as this component is mounted
         sound?.play();
 
-        let timeOutId: NodeJS.Timeout;
-
-        const songProgressRunner = () => {
-            timeOutId = setTimeout(() => {
-                console.log('Running...', sound !== null);
-                if (sound) {
-                    setSongProgress(Math.round(sound.seek()));
-                }
-                songProgressRunner();
-            }, 1000);
-        }
-
-        sound?.once('play', () => {
-           songProgressRunner();
-        })
-
         // Removes the song on unmount
         return () => {
             sound?.unload();
-            if (timeOutId) clearTimeout(timeOutId);
         }
     }, [sound]);
 
@@ -118,18 +121,18 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     }
 
     const handleProgressCommit = (value: number[]) => {
-        if (sound !== null) {
-            sound.seek(value[0]);
-        }
-        setIsMovingProgressBar(false);
+        sound.seek(value[0]);
+        setTimeout(() => {
+            setIsMovingProgressBar(false);
+        }, 500);
     }
 
     // Updates the position of the song progress if it's not being moved by user
     useEffect(() => {
-        if (!isMovingProgressBar) {
-            setSongProgressBar(songProgress);
+        if (!isMovingProgressBar && sound) {
+            setSongProgressBar(Math.round(sound.seek()));
         }
-    }, [songProgress, isMovingProgressBar]);
+    }, [sound, isMovingProgressBar, clock]);
 
     const toggleMute = () => {
         if (volume === 0) {
@@ -140,9 +143,12 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         }
     }
 
-    // TODO - fade-in time slider 0-5s + implementation https://www.npmjs.com/package/use-sound#escape-hatches
+    const toggleOnRepeat = () => {
+        const newOnRepeatValue = !onRepeat;
+        setOnRepeat(newOnRepeatValue);
+    }
 
-    // TODO - loop option ->  sound.loop(<boolean>);
+    // TODO - fade-in time slider 0-5s + implementation https://www.npmjs.com/package/use-sound#escape-hatches
 
     return (
         <div className={`flex ${player.bigPicture && 'flex-col items-center'} md:grid md:grid-cols-3 h-full`}>
@@ -180,7 +186,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             {/* Mobile controller */}
             {player.bigPicture && (
                 <div className='flex 2xs:w-[368px] md:hidden justify-between w-full'>
-                    <p className='w-8'>{String(songProgress/60).split('.')[0]}:{String(songProgress%60).length === 1 ? '0' + songProgress%60 : songProgress%60}</p>
+                    <p className='w-8'>{String(songProgressBar/60).split('.')[0]}:{String(songProgressBar%60).length === 1 ? '0' + songProgressBar%60 : songProgressBar%60}</p>
                     <Slider
                         defaultValue={[0]}
                         value={[songProgressBar]}
@@ -198,11 +204,14 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                     <LikeButton songId={song.id} className='p-3' size={32}/>
                 )}
                 {player.bigPicture && (
-                    <SkipBack
-                        size={30}
-                        className='text-neutral-400 cursor-pointer hover:text-white transition mx-4'
-                        onClick={onPlayPrevious}
-                    />
+                    <>
+                        {/* TODO - add shuffle option */}
+                        <SkipBack
+                            size={30}
+                            className='text-neutral-400 cursor-pointer hover:text-white transition mx-4'
+                            onClick={onPlayPrevious}
+                        />
+                    </>
                 )}
                 <div
                     onClick={handlePlay}
@@ -211,11 +220,18 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                     <Icon size={50} className='text-white p-1'/>
                 </div>
                 {player.bigPicture && (
-                    <SkipForward
-                        size={30}
-                        className='text-neutral-400 cursor-pointer hover:text-white transition mx-4'
-                        onClick={onPlayNext}
-                    />
+                    <>
+                        <SkipForward
+                            size={30}
+                            className='text-neutral-400 cursor-pointer hover:text-white transition mx-4'
+                            onClick={() => setSkip({ skip: true, forced: true })}
+                        />
+                        <Repeat2
+                            size={30}
+                            className={`text-neutral-400 cursor-pointer transition mx-4 ${onRepeat && 'text-[#22c55e]'}`}
+                            onClick={toggleOnRepeat}
+                        />
+                    </>
                 )}
             </div>
 
@@ -235,7 +251,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                 <SkipForward
                     size={30}
                     className='text-neutral-400 cursor-pointer hover:text-white transition'
-                    onClick={onPlayNext}
+                    onClick={() => setSkip({ skip: true, forced: true })}
                 />
             </div>
 
