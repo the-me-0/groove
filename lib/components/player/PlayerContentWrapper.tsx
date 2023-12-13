@@ -38,12 +38,15 @@ const PlayerContentWrapper: React.FC<PlayerContentProps> = ({
         }
     );
 
+    // Updates the player object according to the hook state
     useEffect(() => {
         if (isPlaying !== player.isPlaying) {
             player.setIsPlaying(isPlaying);
         }
     }, [player, isPlaying]);
 
+    // When a the howler is ready (useSound), start the song and on unmount, unload it.
+    //   Once the howler is started, add the song's infos in the player object & the play/pause switcher
     useEffect(() => {
         // Play the song as soon as this component is mounted
         if (sound) {
