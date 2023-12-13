@@ -8,7 +8,7 @@ import Box from '@/lib/components/Box';
 import SidebarItem from '@/lib/components/SidebarItem';
 import Library from '@/lib/components/Library';
 import {Song} from "@prisma/client";
-import usePlayer from "@/hooks/use-player";
+import usePlayer from "@/hooks/player/use-player";
 import {twMerge} from "tailwind-merge";
 
 interface SidebarProps {

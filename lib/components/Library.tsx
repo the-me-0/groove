@@ -20,7 +20,7 @@ const Library: React.FC<LibraryProps> = ({
     const userInfo = useUser();
     const { onOpen } = useModal();
 
-    const onPlay = useOnPlay(songs);
+    const onPlay = useOnPlay(songs, 'you uploads');
 
     const onClick = () => {
         // Handle upload later

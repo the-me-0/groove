@@ -12,7 +12,7 @@ interface PageContentProps {
 const PageContent: React.FC<PageContentProps> = ({
     songs
 }) => {
-    const onPlay = useOnPlay(songs);
+    const onPlay = useOnPlay(songs, 'recent uploads');
 
     if (songs.length === 0) {
         return (

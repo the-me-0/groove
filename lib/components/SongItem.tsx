@@ -36,6 +36,8 @@ const SongItem: React.FC<SongItemProps> = ({
         >
             <div className='relative aspect-square w-full h-full rounded-md overflow-hidden'>
                 <Image
+                    priority={true}
+                    sizes='100%'
                     className='object-cover'
                     src={song.imageUrl || '/images/music-placeholder.png'}
                     fill

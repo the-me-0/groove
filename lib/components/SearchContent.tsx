@@ -13,7 +13,7 @@ interface SearchContentProps {
 const SearchContent: React.FC<SearchContentProps> = ({
     songs
 }) => {
-    const onPlay = useOnPlay(songs);
+    const onPlay = useOnPlay(songs, 'search results');
 
     if (songs.length === 0) {
         return (
