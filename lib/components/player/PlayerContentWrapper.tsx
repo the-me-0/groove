@@ -74,7 +74,7 @@ const PlayerContentWrapper: React.FC<PlayerContentProps> = ({
     // TODO - fade-in time slider 0-5s + implementation https://www.npmjs.com/package/use-sound#escape-hatches
 
     return (
-        <div className={`flex ${player.bigPicture && 'flex-col items-center'} md:grid md:grid-cols-3 h-full`}>
+        <div className={`flex ${player.bigPicture && 'flex-col'} items-center md:justify-between h-full`}>
 
             <MobilePlayerContent song={song} />
             <DesktopPlayerContent song={song} />
