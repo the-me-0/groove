@@ -9,6 +9,7 @@ import React from "react";
 import {Song} from "@prisma/client";
 import MediaItem from "@/lib/components/MediaItem";
 import useOnPlay from "@/hooks/use-on-play";
+import Create from "@/lib/components/Create";
 
 interface LibraryProps {
     songs: Song[];
@@ -17,17 +18,11 @@ interface LibraryProps {
 const Library: React.FC<LibraryProps> = ({
     songs
 }) => {
-    const userInfo = useUser();
     const { onOpen } = useModal();
 
-    const onPlay = useOnPlay(songs, 'you uploads');
+    const onPlay = useOnPlay(songs, 'your uploads');
 
     const onClick = () => {
-        // Handle upload later
-        if (!userInfo.user) {
-            return <RedirectToSignIn />
-        }
-
         onOpen('upload');
     }
 
@@ -42,18 +37,14 @@ const Library: React.FC<LibraryProps> = ({
                         Your Library
                     </p>
                 </div>
-                <AiOutlinePlus
-                    onClick={onClick}
-                    size={20}
-                    className='text-neutral-400 cursor-pointer hover:text-white transition'
-                />
+                <Create />
             </div>
             <div className='flex flex-col gap-y-2 mt-4 px-3'>
                 {songs.map((song) => (
                     <MediaItem
                         onClick={(id: string) => onPlay(id)}
                         key={song.id}
-                        song={song}
+                        data={song}
                     />
                 ))}
             </div>

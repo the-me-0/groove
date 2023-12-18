@@ -1,25 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { Song } from '@prisma/client';
+import {Song, Playlist, PlaylistType} from '@prisma/client';
 import React from "react";
+import {BookHeadphones, Disc, LibraryBig} from "lucide-react";
 
 interface MediaItemProps {
-    song: Song;
+    data: Song | Playlist;
     onClick?: (id: string) => void;
 }
 
 const MediaItem: React.FC<MediaItemProps> = ({
-    song,
+    data,
     onClick
 }) => {
     const handleClick = () => {
         if (onClick) {
-            return onClick(song.id);
+            return onClick(data.id);
         }
-
-        // set the music to this one (player)
     };
+
+    // If song, then Disc.
+    // If playlist, then LibraryBig
+    // If album, then BookHeadphones
+    const value: any = data;
+    const Icon = value?.type === undefined
+      ? Disc
+      : value.type === PlaylistType.PLAYLIST
+        ? LibraryBig
+        : BookHeadphones;
 
     return (
         <div
@@ -30,15 +39,18 @@ const MediaItem: React.FC<MediaItemProps> = ({
                 <Image
                     sizes='100%'
                     fill
-                    src={song.imageUrl || "/images/music-placeholder.png"}
+                    src={data.imageUrl || "/images/music-placeholder.png"}
                     alt="MediaItem"
                     className="object-cover"
                 />
             </div>
             <div className="flex flex-col gap-y-1 overflow-hidden">
-                <p className="text-white truncate">{song.name}</p>
+                <div className='w-full flex items-center gap-x-1'>
+                    <Icon size={15} />
+                    <p className="text-white truncate">{data.name}</p>
+                </div>
                 <p className="text-neutral-400 text-sm truncate">
-                    By {song.artist}
+                    By {data.artist}
                 </p>
             </div>
         </div>

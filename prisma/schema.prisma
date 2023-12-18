@@ -67,7 +67,7 @@ model Playlist {
   name     String
   imageUrl String       @db.Text
   type     PlaylistType
-  // if add transaction, field "artists String @db.Text"
+  artist   String       @db.Text
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)

@@ -34,7 +34,7 @@ const MobilePlayerContent = ({
                     </>
                 )}
                 {!player.bigPicture && (
-                    <MediaItem song={song} onClick={player.toggleBigPicture}/>
+                    <MediaItem data={song} onClick={player.toggleBigPicture}/>
                 )}
             </div>
 

@@ -24,7 +24,7 @@ const DesktopPlayerContent = ({
                 className='hidden md:flex w-fit justify-start'
             >
                 <div className='flex items-center gap-x-4 w-40 lg:w-full'>
-                    <MediaItem song={song} onClick={() => {}}/>
+                    <MediaItem data={song} onClick={() => {}}/>
                     <LikeButton songId={song.id} className={'hidden md:block'}/>
                 </div>
             </div>

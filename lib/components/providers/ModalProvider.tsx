@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {UploadModal} from "@/lib/components/modals/upload-modal";
+import {CreatePlaylistModal} from "@/lib/components/modals/create-playlist-modal";
 
 const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -17,6 +18,7 @@ const ModalProvider = () => {
     return (
         <>
             <UploadModal />
+            <CreatePlaylistModal />
         </>
     );
 }
