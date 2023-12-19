@@ -1,8 +1,9 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
-import Image from 'next/image';
+import Image from "next/image";
 import {FaPlay} from 'react-icons/fa6';
+import React from "react";
 
 interface ListItemProps {
     image: string;

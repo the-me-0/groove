@@ -12,6 +12,8 @@ export async function POST(req: NextRequest) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
 
+        const prodEnv = process.env.NODE_ENV === "production";
+
         const formData = await req.formData();
         const title = formData.get('title') as string;
         const author = formData.get('author') as string;
@@ -28,13 +30,13 @@ export async function POST(req: NextRequest) {
         // -- Song Save
         const uploadSongLocation = `/songs/${uploadTag}.mp3`;
         const songData = await songFile.arrayBuffer();
-        fs.writeFileSync('./public' + uploadSongLocation, Buffer.from(songData));
+        fs.writeFileSync((prodEnv ? './www' : './public') + uploadSongLocation, Buffer.from(songData));
 
         // -- Image Save
         let imageNameSliced = imageFile.name.split('.');
         const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
         const imageData = await imageFile.arrayBuffer();
-        fs.writeFileSync('./public' + uploadImageLocation, Buffer.from(imageData));
+        fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
 
         await db.song.create({
             data: {

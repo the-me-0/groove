@@ -11,3 +11,18 @@ services:
       POSTGRES_PASSWORD: S3cret
       POSTGRES_USER: groove_admin
       POSTGRES_DB: groove
+    healthcheck:
+      test: pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER
+      interval: 5s
+      timeout: 60s
+      retries: 5
+
+  web:
+    build: .
+    restart: always
+    container_name: groove-web
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
