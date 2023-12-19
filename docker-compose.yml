@@ -23,6 +23,13 @@ services:
     container_name: groove-web
     ports:
       - "4000:4000"
+    volumes:
+      - type: volume
+        source: groove_data
+        target: /app/www
     depends_on:
       db:
         condition: service_healthy
+
+volumes:
+  groove_data:
