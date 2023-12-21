@@ -9,12 +9,12 @@ import useDebounce from '@/hooks/use-debounce';
 
 interface SearchInputProps {
     inputPlaceholder?: string;
-    setInputText?: (value: string) => void;
+    onSearchInput?: (input: string) => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
   inputPlaceholder,
-  setInputText
+  onSearchInput
 }) => {
   const router = useRouter();
   const [value, setValue] = useState<string>('');
@@ -25,8 +25,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
       query: debouncedValue,
     };
 
-    if (setInputText) {
-      setInputText(query.query);
+    if (onSearchInput) {
+      onSearchInput(query.query);
     } else {
       const url = qs.stringifyUrl({
         url: '/search',

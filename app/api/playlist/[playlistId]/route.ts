@@ -20,6 +20,10 @@ export async function PATCH(
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
+    if (!params.playlistId) {
+      return new NextResponse('Missing playlistId', { status: 400 });
+    }
+
     const formData = await req.formData();
     const name = formData.get('name') as string | null;
     const imageFile = formData.get('image') as File | null;

@@ -43,12 +43,11 @@ model Song {
   artist    String
 
   // The user that uploaded the song
-  Profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id])
   profileId String
 
-  playlists        Playlist[] // The playlists the song is part of
-  LikesOnSongs     LikesOnSongs[] // likes on this song
-  SongsOnPlaylists SongsOnPlaylists[]
+  likesOnSongs     LikesOnSongs[] // likes on this song
+  songsOnPlaylists SongsOnPlaylists[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -72,9 +71,8 @@ model Playlist {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  songs            Song[]
-  LikesOnPlaylists LikesOnPlaylists[]
-  SongsOnPlaylists SongsOnPlaylists[]
+  likesOnPlaylists LikesOnPlaylists[]
+  songsOnPlaylists SongsOnPlaylists[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

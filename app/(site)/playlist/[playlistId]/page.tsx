@@ -1,11 +1,9 @@
 import Header from "@/lib/components/Header";
-import Image from "next/image";
 import React from "react";
 import getPlaylist from "@/lib/actions/getPlaylist";
 import getSongsByPlaylistId from "@/lib/actions/getSongsByPlaylistId";
-import PlaylistContent from "@/lib/components/PlaylistContent";
+import PlaylistContent from "@/lib/components/playlists/PlaylistContent";
 import {redirect} from "next/navigation";
-import {useModal} from "@/hooks/use-modal-store";
 import PlaylistCover from "@/lib/components/playlists/PlaylistCover";
 
 export const revalidate = 0;
@@ -15,7 +13,7 @@ const Playlist = async (
 ) => {
   const playlist = await getPlaylist(params.playlistId);
   if (!playlist) {
-    return redirect('/')
+    return redirect('/');
   }
 
   const songs = await getSongsByPlaylistId(params.playlistId);
@@ -27,7 +25,7 @@ const Playlist = async (
       <Header>
         <PlaylistCover playlist={playlist} />
       </Header>
-      <PlaylistContent playlistName={playlist.name} songs={songs} />
+      <PlaylistContent playlist={playlist} songs={songs} />
     </div>
   );
 }

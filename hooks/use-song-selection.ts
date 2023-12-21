@@ -1,26 +1,25 @@
 import { create } from "zustand";
+import {Song} from "@prisma/client";
 
 interface SongSelectionStore {
   // Song(s)
-  ids: string[];
-  addId: (id: string) => void;
-  removeId: (id: string) => void;
+  songs: Song[];
+  addSong: (song: Song) => void;
+  removeSong: (idToRemove: string) => void;
+  setSongs: (songs: Song[]) => void;
   reset: () => void;
 }
 
 const useSongSelection = create<SongSelectionStore>((set, getState) => ({
   // Song(s)
-  ids: [],
-  addId: (id: string) => set({ ids: [...getState().ids, id] }),
-  removeId: (id: string) => {
-    const actualIds = getState().ids;
-    const idIndex = actualIds.indexOf(id);
-    if (idIndex !== -1) {
-      delete actualIds[idIndex];
-      set({ ids: actualIds });
-    }
+  songs: [],
+  addSong: (song: Song) => set({ songs: [...getState().songs, song] }),
+  removeSong: (idToRemove: string) => {
+    const actualSongs = getState().songs;
+    set({ songs: actualSongs.filter((song) => song.id !== idToRemove) }); // We keep all elements that are not the given id
   },
-  reset: () => set({ ids: [] })
+  setSongs: (songs: Song[]) => set({ songs: songs }),
+  reset: () => set({ songs: [] })
 }));
 
 export default useSongSelection;

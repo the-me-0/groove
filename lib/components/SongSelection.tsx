@@ -1,42 +1,105 @@
-import React, {useState} from "react";
+'use client';
+
+import React, {useEffect, useState} from "react";
 import SearchInput from "@/lib/components/SearchInput";
+import getSongsByQuery from "@/lib/actions/getSongsByQuery";
+import useSongSelection from "@/hooks/use-song-selection";
+import {Song} from "@prisma/client";
+import MediaItem from "@/lib/components/MediaItem";
+import { Button } from "@/lib/shadcn-components/ui/button";
+import axios from "axios";
+import toast from "react-hot-toast";
+import clearCachesByServerAction from "@/lib/actions/revalidate";
 
 interface SongSelectionProps {
-  onChange: (songs: string[]) => void
+  confirmPath: string;
+  revalidatePath: string;
 }
 
 const SongSelection: React.FC<SongSelectionProps> = ({
-  onChange
+  confirmPath,
+  revalidatePath
 }) => {
-  const [songs, setSongs] = useState<string[]>([])
-
   // The selected songs display is only handled by the parent component : but if user wants to remove an image from the list ?
   // use a hook "useSongSelection" that will store elements, and revalidate: 0 in both this component and its parent ?
+  const selection = useSongSelection();
+  const [searchedSongs, setSearchedSongs] = useState<Song[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSongSelected = (id: string) => {
-    // add song to list
-    // call onChange with songs
+  // On unmount, reset the selection
+  useEffect(() => {
+    return () => {
+      selection.reset();
+    }
+  }, []);
+
+  const onSongSelected = (song: Song) => {
+    selection.addSong(song);
   }
 
   const onSongRemoved = (id: string) => {
-    // remove song from list
-    // call onChange with songs
+    selection.removeSong(id);
   }
 
-  const onSearchInput = (query: string) => {
-    // update song search result
+  const onSearchInput = async (query: string) => {
+    const searchResult = await getSongsByQuery(query);
+    setSearchedSongs(searchResult);
+  }
+
+  const onChangeConfirm = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.patch(confirmPath, { ids: selection.songs.map((song) => song.id) });
+
+      if (response.status !== 200) {
+        toast.error('Something went wrong.');
+        console.log(`[SONG_SELECTION_UPDATE] Server responded with status ${response.status}. (context: ${confirmPath})`);
+      } else {
+        toast.success('Playlist successfully modified !');
+        await clearCachesByServerAction(revalidatePath);
+      }
+    } catch (error) {
+      console.error('[SONG_SELECTION_UPDATE] ERROR', error, `(context: ${confirmPath})`)
+      toast.error('Something went wrong.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
-    <>
-      <div className='w-full p-2 rounded-lg bg-neutral-800'>
-        {/* ModalSearchInput -> onOpen('xxxxx', data) */}
-        <SearchInput inputPlaceholder={'Search songs to add...'}/>
+    <div className='w-full p-2 mt-10 flex flex-col space-y-2 items-start'>
+      <h1 className='text-2xl font-semibold p-4 pb-1'>Add some songs</h1>
+      <div className='px-1 w-full flex'>
+        <div className='flex-1'>
+          <SearchInput inputPlaceholder={'Search songs to add...'} onSearchInput={onSearchInput} />
+        </div>
+        <Button onClick={() => onChangeConfirm()} disabled={isLoading}>
+          Confirm
+        </Button>
       </div>
-      <div>
-        {/* Show search results */}
-      </div>
-    </>
+      {searchedSongs.map((song: Song) => (
+        <div key={song.name} className='pl-4 w-full flex space-x-2'>
+          <MediaItem data={song} onClick={() => {}} />
+          {selection.songs.map((song) => song.id).includes(song.id) && (
+            <Button
+              onClick={() => onSongRemoved(song.id)}
+              className='w-32 h-8 my-auto rounded-full font-bold bg-neutral-900 border-2 border-deep-green text-deep-green hover:bg-deep-green hover:text-neutral-300 hover:border-neutral-400'
+            >
+              Remove
+            </Button>
+          )}
+          {!selection.songs.map((song) => song.id).includes(song.id) && (
+            <Button
+              onClick={() => onSongSelected(song)}
+              className='w-32 h-8 my-auto rounded-full font-bold bg-neutral-900 border-2 border-deep-green text-deep-green hover:bg-deep-green hover:text-neutral-300 hover:border-neutral-400'
+            >
+              Add
+            </Button>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 

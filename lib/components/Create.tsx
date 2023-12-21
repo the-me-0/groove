@@ -14,6 +14,8 @@ import {BookHeadphones, Disc, LibraryBig} from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {redirect, useRouter} from "next/navigation";
+import {revalidatePath} from "next/cache";
+import clearCachesByServerAction from "@/lib/actions/revalidate";
 
 const Create: React.FC = () => {
   const { onOpen } = useModal();
@@ -27,6 +29,7 @@ const Create: React.FC = () => {
       return;
     }
 
+    await clearCachesByServerAction();
     router.push(`/playlist/${response.data.id}`);
   }
 
