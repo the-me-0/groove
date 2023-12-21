@@ -1,17 +1,34 @@
+'use client';
+
 import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem, DropdownMenuSeparator,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/lib/shadcn-components/ui/dropdown-menu";
-import {ModalType, useModal} from "@/hooks/use-modal-store";
+import {useModal} from "@/hooks/use-modal-store";
 import {AiOutlinePlus} from "react-icons/ai";
 import {BookHeadphones, Disc, LibraryBig} from "lucide-react";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import {redirect, useRouter} from "next/navigation";
 
 const Create: React.FC = () => {
   const { onOpen } = useModal();
+  const router = useRouter();
+
+  const onPlaylistCreate = async () => {
+    const response = await axios.post('/api/playlist');
+
+    if (response.status !== 200) {
+      toast.error('Something went wrong.');
+      return;
+    }
+
+    router.push(`/playlist/${response.data.id}`);
+  }
 
   return (
     <DropdownMenu>
@@ -38,14 +55,14 @@ const Create: React.FC = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => onOpen('create-playlist')}
+          onClick={() => onPlaylistCreate()}
           className='text-neutral-300 hover:text-spotify-green px-3 py-2 text-sm cursor-pointer'
         >
           <BookHeadphones className='h-4 w-4' />
           <p className='ml-1 mr-auto'>Create Album</p>
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => onOpen('create-playlist')}
+          onClick={() => onPlaylistCreate()}
           className='text-neutral-300 hover:text-spotify-green px-3 py-2 text-sm cursor-pointer'
         >
           <LibraryBig className='h-4 w-4' />

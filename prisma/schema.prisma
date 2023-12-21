@@ -72,7 +72,7 @@ model Playlist {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  Song             Song[]
+  songs            Song[]
   LikesOnPlaylists LikesOnPlaylists[]
   SongsOnPlaylists SongsOnPlaylists[]
 

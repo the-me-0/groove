@@ -12,24 +12,18 @@ import { useModal } from '@/hooks/use-modal-store';
 import { useForm } from "react-hook-form";
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {useState} from "react";
 import {Input} from "@/lib/shadcn-components/ui/input";
 import Button from "@/lib/components/Button";
 import toast from "react-hot-toast";
-import { useUser } from "@/hooks/use-user";
 import {useRouter} from "next/navigation";
-import SearchInput from "@/lib/components/SearchInput";
-import {Song} from "@prisma/client";
 import axios from "axios";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/lib/shadcn-components/ui/form";
 
-export const CreatePlaylistModal = () => {
-  const { onOpen, isOpen, onClose, type, data } = useModal();
+export const EditPlaylistModal = () => {
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
-  const userContext = useUser();
-  const [songs, setSongs] = useState<Song[]>([]);
 
-  const isModalOpen = isOpen && type === 'create-playlist';
+  const isModalOpen = isOpen && type === 'edit-playlist';
 
   // Image rules
   const MAX_IMAGE_SIZE = 5; // 5 MB
@@ -41,10 +35,8 @@ export const CreatePlaylistModal = () => {
   ];
 
   const formSchema = z.object({
-    name: z.string().min(1, {
-      message: 'Playlist name is required.'
-    }),
-    image: z.custom<File>()
+    name: z.optional(z.string()),
+    image: z.optional(z.custom<File>()
       .refine(
         (file) => file !== undefined, {
           message: 'Please provide an image.'
@@ -59,8 +51,7 @@ export const CreatePlaylistModal = () => {
       .refine(
         (file) => ALLOWED_IMAGE_TYPES.includes(file?.type),
         "Only these types are allowed .jpg, .jpeg, .png and .webp"
-      ),
-    songsId: z.array(z.string()) // no refine because we handle this one directly in this component
+      ))
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,22 +62,17 @@ export const CreatePlaylistModal = () => {
 
   const onSubmit = async (values: z.infer<typeof  formSchema>) => {
     try {
-      if (!userContext.user) {
-        toast.error("Couldn't find user");
+      if (!data.playlist || (!values.image && !values.name)) {
+        // User has not changed the values, return empty.
+        onClose();
         return;
       }
 
-      if (!songs.length) {
-        toast.error("Please select at least one song.");
-        return;
-      }
+      const formData = new FormData();
+      if (values.name) formData.append('name', values.name);
+      if (values.image) formData.append('image', values.image);
 
-      if (!form.getValues().image) {
-        toast.error("Please select a background image !");
-        return;
-      }
-
-      const response = await axios.post('/api/playlists', values);
+      const response = await axios.patch(`/api/playlist/${data.playlist.id}`, formData);
 
       if (response.status !== 200) {
         return toast.error('Song upload failed.');
@@ -113,10 +99,10 @@ export const CreatePlaylistModal = () => {
       <DialogContent className='bg-neutral-900 text-white overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>
-            Create a playlist
+            Edit playlist
           </DialogTitle>
           <DialogDescription className='text-md text-center'>
-            Name it & add songs
+            Name it change its image
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -173,7 +159,7 @@ export const CreatePlaylistModal = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          placeholder={'Enter playlist name'}
+                          placeholder={data?.playlist?.name || 'Enter playlist name'}
                           {...someField}
                           onChange={onChange}
                         />
@@ -183,15 +169,6 @@ export const CreatePlaylistModal = () => {
                   );
                 }}
               />
-
-              {/* ~~~~~~~~~~~~ SONGS SELECTION ~~~~~~~~~~~~ */}
-              <div className='w-full p-2 rounded-lg bg-neutral-800'>
-                {/* ModalSearchInput -> onOpen('xxxxx', data) */}
-                <SearchInput inputPlaceholder={'Search songs to add...'}/>
-              </div>
-              <div>
-
-              </div>
               {/* ~~~~~~~~~~~~ SUBMIT ~~~~~~~~~~~~ */}
               <DialogFooter>
                 <Button disabled={isLoading} type='submit'>

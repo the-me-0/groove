@@ -8,7 +8,12 @@ const getPlaylists = async (): Promise<Playlist[]> => {
         }
     });
 
-    return playlists || [];
+    const formattedPlaylists: Playlist[] = playlists.map((playlist: Playlist) => {
+        if (!playlist.imageUrl) playlist.imageUrl = '/songs/images/playlist.png';
+        return playlist;
+    })
+
+    return formattedPlaylists || [];
 }
 
 export default getPlaylists;

@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { useUser } from "@clerk/nextjs";
-import { db } from "@/lib/db";
 import {currentProfile} from "@/lib/current-profile";
 
 export async function GET(

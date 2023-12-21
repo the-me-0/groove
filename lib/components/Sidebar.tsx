@@ -7,18 +7,20 @@ import { BiSearch } from 'react-icons/bi';
 import Box from '@/lib/components/Box';
 import SidebarItem from '@/lib/components/SidebarItem';
 import Library from '@/lib/components/Library';
-import {Song} from "@prisma/client";
+import {Playlist, Song} from "@prisma/client";
 import usePlayer from "@/hooks/player/use-player";
 import {twMerge} from "tailwind-merge";
 
 interface SidebarProps {
     children: React.ReactNode;
     songs: Song[];
+    playlists: Playlist[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
     children,
-    songs
+    songs,
+    playlists
 }) => {
     const pathname = usePathname();
     const player = usePlayer();
@@ -52,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </div>
                 </Box>
                 <Box className='overflow-y-auto h-full'>
-                    <Library songs={songs}/>
+                    <Library songs={songs} playlists={playlists}/>
                 </Box>
             </div>
             <main className='h-full flex-1 overflow-y-auto py-2'>

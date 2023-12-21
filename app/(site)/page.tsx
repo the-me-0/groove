@@ -28,7 +28,7 @@ export default async function Home() {
               href='liked'
             />
             {playlists.map((playlist) => (
-              <ListItem key={playlist.id} image={playlist.imageUrl} name={playlist.name} href={playlist.name} />
+              <ListItem key={playlist.id} image={playlist.imageUrl} name={playlist.name} href={`/playlist/${playlist.id}`} />
             ))}
           </div>
         </div>
