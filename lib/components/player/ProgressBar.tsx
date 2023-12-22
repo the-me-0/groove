@@ -54,7 +54,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                 max={duration / 1000}
                 className='mx-2'
             />
-            <p className='w-8'>{String(duration / 60000).split('.')[0]}:{String((duration / 1000) % 60).length === 1 ? '0' + String((duration / 1000) % 60).split('.')[0] : String((duration / 1000) % 60).split('.')[0] || '0:00'}</p>
+            <p className='w-8'>{String(duration / 60000).split('.')[0]}:{String((duration / 1000) % 60).length === 1 ? '0' + String((duration / 1000) % 60).split('.')[0] : ((String((duration / 1000) % 60).split('.')[0].length === 1 ? '0': '') + String((duration / 1000) % 60).split('.')[0]) || '0:00'}</p>
         </div>
     );
 }
