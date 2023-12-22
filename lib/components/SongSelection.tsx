@@ -68,35 +68,42 @@ const SongSelection: React.FC<SongSelectionProps> = ({
   }
 
   return (
-    <div className='w-full p-2 mt-10 flex flex-col space-y-2 items-start'>
+    <div className='w-full p-2 mt-2 flex flex-col space-y-2 items-start'>
       <h1 className='text-2xl font-semibold p-4 pb-1'>Add some songs</h1>
-      <div className='px-1 w-full flex'>
+      <div className='px-3 w-full flex space-x-3'>
         <div className='flex-1'>
           <SearchInput inputPlaceholder={'Search songs to add...'} onSearchInput={onSearchInput} />
         </div>
-        <Button onClick={() => onChangeConfirm()} disabled={isLoading}>
+        <Button
+          onClick={() => onChangeConfirm()}
+          disabled={isLoading}
+          className='h-10 my-auto bg-deep-green border-2 border-neutral-300 text-neutral-300 hover:bg-neutral-900 hover:border-neutral-400 hover:text-neutral-400'
+        >
           Confirm
         </Button>
       </div>
       {searchedSongs.map((song: Song) => (
-        <div key={song.name} className='pl-4 w-full flex space-x-2'>
+        <div key={song.name} className='pl-4 w-full flex flex-col space-y-2 space-x-2 2xs:flex-row'>
           <MediaItem data={song} onClick={() => {}} />
-          {selection.songs.map((song) => song.id).includes(song.id) && (
-            <Button
-              onClick={() => onSongRemoved(song.id)}
-              className='w-32 h-8 my-auto rounded-full font-bold bg-neutral-900 border-2 border-deep-green text-deep-green hover:bg-deep-green hover:text-neutral-300 hover:border-neutral-400'
-            >
-              Remove
-            </Button>
-          )}
-          {!selection.songs.map((song) => song.id).includes(song.id) && (
-            <Button
-              onClick={() => onSongSelected(song)}
-              className='w-32 h-8 my-auto rounded-full font-bold bg-neutral-900 border-2 border-deep-green text-deep-green hover:bg-deep-green hover:text-neutral-300 hover:border-neutral-400'
-            >
-              Add
-            </Button>
-          )}
+          <div className='flex'>
+            <div className='2xs:hidden w-12 h-5 border-b-4 border-l-4 border-deep-green rounded-bl-2xl ml-2 mr-5'></div>
+            {selection.songs.map((song) => song.id).includes(song.id) && (
+              <Button
+                onClick={() => onSongRemoved(song.id)}
+                className='w-32 h-8 my-auto rounded-full font-bold bg-neutral-900 border-2 border-deep-green text-deep-green hover:bg-deep-green hover:text-neutral-300 hover:border-neutral-400'
+              >
+                Remove
+              </Button>
+            )}
+            {!selection.songs.map((song) => song.id).includes(song.id) && (
+              <Button
+                onClick={() => onSongSelected(song)}
+                className='w-32 h-8 my-auto rounded-full font-bold bg-neutral-900 border-2 border-deep-green text-deep-green hover:bg-deep-green hover:text-neutral-300 hover:border-neutral-400'
+              >
+                Add
+              </Button>
+            )}
+          </div>
         </div>
       ))}
     </div>

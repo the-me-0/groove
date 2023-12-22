@@ -24,7 +24,7 @@ const PlaylistAfterEdit: React.FC<PlaylistAfterEditProps> = ({
   }, [songs, futureSongs]);
 
   return (
-    <div>
+    <div className='px-8'>
       {addedSongs.length ? (
         <>
           <p className='font-semibold text-xl'>Added songs</p>
