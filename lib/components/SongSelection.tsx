@@ -86,7 +86,7 @@ const SongSelection: React.FC<SongSelectionProps> = ({
         <div key={song.name} className='pl-4 w-full flex flex-col space-y-2 space-x-2 2xs:flex-row'>
           <MediaItem data={song} onClick={() => {}} />
           <div className='flex'>
-            <div className='2xs:hidden w-12 h-5 border-b-4 border-l-4 border-deep-green rounded-bl-2xl ml-2 mr-5'></div>
+            <div className='2xs:hidden flex-1 h-5 border-b-4 border-l-4 border-deep-green rounded-bl-2xl ml-2 mr-5'></div>
             {selection.songs.map((song) => song.id).includes(song.id) && (
               <Button
                 onClick={() => onSongRemoved(song.id)}
