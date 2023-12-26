@@ -1,35 +1,22 @@
 "use client";
 
 import {TbPlaylist} from 'react-icons/tb';
-import {AiOutlinePlus} from 'react-icons/ai';
-import {useUser} from "@/hooks/use-user";
-import {RedirectToSignIn} from "@clerk/nextjs";
-import {useModal} from "@/hooks/use-modal-store";
 import React from "react";
-import {Song} from "@prisma/client";
+import {Playlist, Song} from "@prisma/client";
 import MediaItem from "@/lib/components/MediaItem";
 import useOnPlay from "@/hooks/use-on-play";
+import Create from "@/lib/components/Create";
 
 interface LibraryProps {
     songs: Song[];
+    playlists: Playlist[];
 }
 
 const Library: React.FC<LibraryProps> = ({
-    songs
+  songs,
+  playlists
 }) => {
-    const userInfo = useUser();
-    const { onOpen } = useModal();
-
-    const onPlay = useOnPlay(songs, 'you uploads');
-
-    const onClick = () => {
-        // Handle upload later
-        if (!userInfo.user) {
-            return <RedirectToSignIn />
-        }
-
-        onOpen('upload');
-    }
+    const onPlay = useOnPlay(songs, 'your uploads');
 
     return (
         <div className='flex flex-col'>
@@ -42,20 +29,25 @@ const Library: React.FC<LibraryProps> = ({
                         Your Library
                     </p>
                 </div>
-                <AiOutlinePlus
-                    onClick={onClick}
-                    size={20}
-                    className='text-neutral-400 cursor-pointer hover:text-white transition'
-                />
+                <Create />
             </div>
             <div className='flex flex-col gap-y-2 mt-4 px-3'>
-                {songs.map((song) => (
-                    <MediaItem
-                        onClick={(id: string) => onPlay(id)}
-                        key={song.id}
-                        song={song}
-                    />
-                ))}
+              {/*
+              {playlists.map((playlist) => (
+                <MediaItem
+                  onClick={(id: string) => onPlay(id)}
+                  key={playlist.id}
+                  data={playlist}
+                />
+              ))}
+              */}
+              {songs.map((song) => (
+                  <MediaItem
+                      onClick={(id: string) => onPlay(id)}
+                      key={song.id}
+                      data={song}
+                  />
+              ))}
             </div>
         </div>
     )

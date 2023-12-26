@@ -1,3 +1,5 @@
+'use server';
+
 import {Song} from "@prisma/client";
 import {db} from "@/lib/db";
 import getSongs from "@/lib/actions/getSongs";

@@ -3,7 +3,7 @@ import {ChevronDown, Pause, Play, Repeat2, Share2, SkipBack, SkipForward} from "
 import usePlayer from "@/hooks/player/use-player";
 import usePlayerControls from "@/hooks/player/use-player-controls";
 import toast from "react-hot-toast";
-import LargeMediaItem from "@/lib/components/LargeMediaItem";
+import LargeMediaItem from "@/lib/components/player/LargeMediaItem";
 import MediaItem from "@/lib/components/MediaItem";
 import {Song} from "@prisma/client";
 import LikeButton from "@/lib/components/LikeButton";
@@ -34,7 +34,7 @@ const MobilePlayerContent = ({
                     </>
                 )}
                 {!player.bigPicture && (
-                    <MediaItem song={song} onClick={player.toggleBigPicture}/>
+                    <MediaItem data={song} onClick={player.toggleBigPicture}/>
                 )}
             </div>
 

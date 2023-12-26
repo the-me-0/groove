@@ -75,7 +75,6 @@ const PlayerContentWrapper: React.FC<PlayerContentProps> = ({
 
     return (
         <div className={`flex ${player.bigPicture && 'flex-col'} items-center md:justify-between h-full`}>
-
             <MobilePlayerContent song={song} />
             <DesktopPlayerContent song={song} />
         </div>

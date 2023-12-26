@@ -8,9 +8,8 @@ import {HiHome} from 'react-icons/hi';
 import {BiSearch} from 'react-icons/bi';
 import Button from '@/lib/components/Button';
 import {UserButton} from '@clerk/nextjs';
-import {ModeToggle} from '@/lib/components/mode-toggle';
 import {neobrutalism} from '@clerk/themes';
-import {useModal} from "@/hooks/use-modal-store";
+import toast from "react-hot-toast";
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -22,7 +21,6 @@ const Header: React.FC<HeaderProps> = ({
     className
 }) => {
     const router = useRouter();
-    const { onOpen } = useModal();
 
     return (
         <div
@@ -86,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({
                         </div> */}
                         <div>
                             <Button
-                                onClick={() => onOpen('example', {})}
+                                onClick={() => toast.error('Not available yet')}
                                 className='bg-transparent text-neutral-300 font-medium'
                             >
                                 Get the android App

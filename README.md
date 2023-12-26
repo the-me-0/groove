@@ -25,14 +25,18 @@ Project global advancement
 - [x] Song fetching & list
 - [x] Favorites functionality
 - [x] Player functionality
-- [x] ~~ Overall review before **Beta 0.1** 
-- [ ] Playlist/Album creation
-- [ ] Production environment creation `ongoing`
-- [ ] Player update - shuffle, loop, queue display, song duration & song progress (+ set playing second ?) `ongoing`
-- [ ] Spotify integration - song upload using spotify-down
+- [x] ~~ Overall review before **Beta 0.1** `--> Released !`
+- [x] Playlist creation
+- [x] Player update - loop, song duration & song progress
+- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [ ] Production Ready build & https `ongoing`
 - [ ] ~~ Overall review before **Beta 0.2**
+- [ ] Player shuffle option
+- [ ] Song deletion
+- [ ] Song queue display (page) & "Add to queue" option
+- [ ] Song search upgrade & security
+- [ ] ~~ Overall review before **Beta 0.3**
 - [ ] Mobile App (PWA)
-- [ ] BONUS : discord rich presence integration
 
 ## Start the project - development
 

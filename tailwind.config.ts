@@ -27,6 +27,7 @@ const config: Config = {
     extend: {
       colors: {
         'spotify-green': '#22C55E',
+        'deep-green': '#005B41',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
