@@ -68,12 +68,16 @@ As much of the work has already been done for the deployment, here's how things 
 - After ~ 2 minutes of build and start-up, the project should be up and running on localhost:4000 !
 
 **IMPORTANT NOTICE**
-The production environment may now be accessible on port 4000, I am still not satisfied with the result :
-each build needs to access the whole project,
-and I would love to build the web image on my dev computer,
-push the image on a docker repository,
-then just precise the image on my server (NAS) who will actually run the production app ;
-which will allow me to only have the code on my machine.
+The production build is pushed manually (for now) to the docker hub, and available [here](https://hub.docker.com/repository/docker/phoenlxx/groove-web/general).
+You can find in the docker repository a `docker-compose.yml` file content that can start the project in its production version.
+Further automation will be implemented in the future to make the docker hub repository mirror the changes on this GitHub main branch (CI/CD dev feature).
+
+Personal note:
+As there is no CI/CD for now, I need to push the new images manually. Here are some docker commands :
+- `docker login`
+- `docker build -t phoenlxx/groove-web:<tagname>`
+- `docker tag <oldTagname> <newTagname>`
+- `docker push phoenlxx/groove-web:<tagname>`
 
 ## Colors, Logo, etc
 

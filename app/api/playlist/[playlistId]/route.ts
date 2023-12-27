@@ -24,6 +24,8 @@ export async function PATCH(
       return new NextResponse('Missing playlistId', { status: 400 });
     }
 
+    const prodEnv = process.env.NODE_ENV === "production";
+
     const formData = await req.formData();
     const name = formData.get('name') as string | null;
     const imageFile = formData.get('image') as File | null;
@@ -41,7 +43,7 @@ export async function PATCH(
       let imageNameSliced = imageFile.name.split('.'); // ease the extension definition for next line
       const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
       const imageData = await imageFile.arrayBuffer();
-      fs.writeFileSync('./public' + uploadImageLocation, Buffer.from(imageData));
+      fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
 
       editedData.imageUrl = uploadImageLocation;
     } else {
@@ -52,7 +54,7 @@ export async function PATCH(
       delete editedData.name;
     }
 
-    const server = await db.playlist.update({
+    const playlist = await db.playlist.update({
       where: {
         id: params.playlistId,
         profileId: profile.id
@@ -60,9 +62,9 @@ export async function PATCH(
       data: editedData
     });
 
-    return NextResponse.json(server);
+    return NextResponse.json(playlist);
   } catch (error) {
-    console.log('[SERVER_ID_PATCH]', error);
+    console.log('[PLAYLIST_ID_PATCH]', error);
     return new NextResponse('Internal Error', { status: 500 });
   }
 }

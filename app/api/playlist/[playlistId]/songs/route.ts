@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
-import {v4 as uuidv4} from "uuid";
-import fs from "fs";
 import {Playlist, SongsOnPlaylists} from "@prisma/client";
 
 interface EditPlaylistParams {
@@ -50,7 +48,7 @@ export async function PATCH(
     const idsToAdd = data.ids!.filter((id) => !existingIds.includes(id));
 
     // We remove those ids
-    await prisma!.$transaction(
+    await db.$transaction(
       idsToRemove.map((id) => db.songsOnPlaylists.delete({
         where: {
           playlistId_songId: {
@@ -62,7 +60,7 @@ export async function PATCH(
     );
 
     // We add the new ons
-    await prisma!.$transaction(
+    await db.$transaction(
       idsToAdd.map((id) => db.songsOnPlaylists.create({
         data: {
           playlistId: params.playlistId,
@@ -74,7 +72,7 @@ export async function PATCH(
     const { songsOnPlaylists, ...playlistWithoutSongs } = playlist;
     return NextResponse.json(playlistWithoutSongs);
   } catch (error) {
-    console.log('[SERVER_ID_PATCH]', error);
+    console.log('[PLAYLIST_ID_SONGS_PATCH]', error);
     return new NextResponse('Internal Error', { status: 500 });
   }
 }
