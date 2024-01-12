@@ -5,14 +5,9 @@ import {currentProfile} from "@/lib/current-profile";
 const getPlaylistsByProfileId = async (): Promise<Playlist[]> => {
   const profile = await currentProfile();
 
-  if (!profile) return [];
-
   const playlists = await db.playlist.findMany({
     where: {
       profileId: profile.id
-    },
-    orderBy: {
-      createdAt: 'desc'
     }
   });
 

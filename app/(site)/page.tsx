@@ -1,16 +1,17 @@
 import Header from '@/lib/components/Header';
 import ListItem from '@/lib/components/ListItem';
-import {initialProfile} from '@/lib/initial-profile';
 import React from "react";
 import getSongs from "@/lib/actions/getSongs";
 import PageContent from '../../lib/components/PageContent';
 import getPlaylists from '@/lib/actions/getPlaylists';
+import {currentProfile} from '@/lib/current-profile';
+import {signOut} from '@/auth';
 
 // prevents this page to be cached, in order for it to always be up-to-date
 export const revalidate = 0;
 
 export default async function Home() {
-  await initialProfile(); // We don't need the returned value there, but we still need to generate an account for new users
+  const profile = await currentProfile();
   const songs = await getSongs();
   const playlists = await getPlaylists();
 
@@ -19,7 +20,7 @@ export default async function Home() {
       <Header>
         <div className='mb-2'>
           <h1 className='text-white text-3xl font-semibold'>
-              Welcome back
+              Welcome back {profile.name}!
           </h1>
           <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4'>
             <ListItem

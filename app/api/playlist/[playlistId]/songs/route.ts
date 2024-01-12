@@ -3,21 +3,12 @@ import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
 import {Playlist, SongsOnPlaylists} from "@prisma/client";
 
-interface EditPlaylistParams {
-  name?: string;
-  imageUrl?: string;
-}
-
 export async function PATCH(
   req: Request,
   { params }: { params: { playlistId: string } }
 ) {
   try {
     const profile = await currentProfile();
-
-    if (!profile) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
 
     if (!params.playlistId) {
       return new NextResponse('Missing playlistId', { status: 400 });

@@ -28,14 +28,17 @@ Project global advancement
 - [x] ~~ Overall review before **Beta 0.1** `--> Released !`
 - [x] Playlist creation
 - [x] Player update - loop, song duration & song progress
-- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [x] Clerk removal
 - [ ] Production Ready build & https `ongoing`
 - [ ] ~~ Overall review before **Beta 0.2**
 - [ ] Player shuffle option
+- [ ] Song page & share song option
 - [ ] Song deletion
 - [ ] Song queue display (page) & "Add to queue" option
 - [ ] Song search upgrade & security
 - [ ] ~~ Overall review before **Beta 0.3**
+- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [ ] ~~ Overall review before **Beta 0.4**
 - [ ] Mobile App (PWA)
 
 ## Start the project - development
@@ -90,7 +93,7 @@ As there is no CI/CD for now, I need to push the new images manually. Here are s
 ## Once up
 
 You will now need to generate an invitation link in order to create your first user.
-To do so, you have to send this post request : `curl -X POST "http://localhost:3000/api/invite-link?api-key=<replace-me>"`
+To do so, you have to send this post request : `curl -X POST "http://localhost:3000/api/sponsorship?api-key=<replace-me>"`
 
 ## How to reproduce
 
