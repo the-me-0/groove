@@ -28,7 +28,7 @@ Project global advancement
 - [x] ~~ Overall review before **Beta 0.1** `--> Released !`
 - [x] Playlist creation
 - [x] Player update - loop, song duration & song progress
-- [ ] Clerk removal `ongoing`
+- [x] Clerk removal
 - [ ] Production Ready build & https `ongoing`
 - [ ] ~~ Overall review before **Beta 0.2**
 - [ ] Player shuffle option
