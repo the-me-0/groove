@@ -22,8 +22,6 @@ export default {
             profile.password
           );
 
-          if (passwordsMatch) console.log('passwords match', profile.name);
-
           if (passwordsMatch) return profile;
         }
 

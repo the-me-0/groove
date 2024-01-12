@@ -8,7 +8,7 @@ import {HiHome} from 'react-icons/hi';
 import {BiSearch} from 'react-icons/bi';
 import Button from '@/lib/components/Button';
 import toast from "react-hot-toast";
-import {signOut} from '@/auth';
+import {onSignOut} from '@/lib/actions/onSignOut';
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -20,6 +20,10 @@ const Header: React.FC<HeaderProps> = ({
     className
 }) => {
     const router = useRouter();
+
+    const onLogout = () => {
+        onSignOut().then(r => {});
+    }
 
     return (
         <div
@@ -75,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({
                     { /* <ModeToggle /> */}
                     <div>
                         <Button
-                          onClick={() => {}}
+                          onClick={() => onLogout()}
                           className='bg-white px-6 py-2 cursor-pointer'
                         >
                             Sign out

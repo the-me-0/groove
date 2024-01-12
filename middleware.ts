@@ -15,7 +15,6 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  // @ts-ignore - this is needed in case there is no public route
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
@@ -33,7 +32,6 @@ export default auth((req) => {
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL('/auth/login', nextUrl));
   }
-
   return null;
 })
 
