@@ -1,11 +1,8 @@
 import type { Metadata } from 'next'
 import { Figtree } from 'next/font/google'
 import './globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/lib/components/providers/theme-provider'
-import { dark } from '@clerk/themes';
 import ModalProvider from "@/lib/components/providers/ModalProvider";
-import UserProvider from "@/lib/components/providers/UserProvider";
 import React from "react";
 import {Toaster} from "react-hot-toast";
 
@@ -24,24 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
-        <ClerkProvider
-            appearance={{
-              baseTheme: dark
-            }}
+        <ModalProvider />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey='groove-theme'
         >
-          <UserProvider>
-            <ModalProvider />
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem={false}
-              storageKey='groove-theme'
-            >
-                <Toaster />
-              {children}
-            </ThemeProvider>
-          </UserProvider>
-        </ClerkProvider>
+            <Toaster />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

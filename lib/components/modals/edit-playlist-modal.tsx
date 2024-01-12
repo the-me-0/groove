@@ -172,7 +172,7 @@ export const EditPlaylistModal = () => {
               {/* ~~~~~~~~~~~~ SUBMIT ~~~~~~~~~~~~ */}
               <DialogFooter>
                 <Button disabled={isLoading} type='submit'>
-                  Create
+                  Edit
                 </Button>
               </DialogFooter>
             </div>

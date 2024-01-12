@@ -16,10 +16,6 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
 
-    if (!profile) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
-
     if (!params.playlistId) {
       return new NextResponse('Missing playlistId', { status: 400 });
     }
@@ -37,7 +33,7 @@ export async function PATCH(
 
     if (imageFile) {
       const uuid = uuidv4();
-      const uploadTag = `${profile.name.replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
+      const uploadTag = `${(profile.name || 'dummy').replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
 
       // -- Image Save
       let imageNameSliced = imageFile.name.split('.'); // ease the extension definition for next line

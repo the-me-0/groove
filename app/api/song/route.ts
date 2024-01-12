@@ -8,10 +8,6 @@ export async function POST(req: NextRequest) {
     try {
         const profile = await currentProfile();
 
-        if (!profile) {
-            return new NextResponse('Unauthorized', { status: 401 });
-        }
-
         const prodEnv = process.env.NODE_ENV === "production";
 
         const formData = await req.formData();

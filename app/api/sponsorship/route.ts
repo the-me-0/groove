@@ -1,6 +1,7 @@
-import {NextResponse} from "next/server";
-import {db} from "@/lib/db";
-import {InviteLink} from "@prisma/client";
+import { NextResponse } from "next/server";
+
+import { db } from "@/lib/db";
+import { Sponsorship } from "@prisma/client";
 
 export async function POST(
     req: Request
@@ -20,14 +21,14 @@ export async function POST(
             return new NextResponse('Wrong ApiKey', { status: 401 });
         }
 
-        const inviteLink: InviteLink = await db.inviteLink.create({
+        const sponsorship: Sponsorship = await db.sponsorship.create({
             data: {}
         });
 
         return NextResponse.json({
-            'message': 'Invite link created. Follow the complete link to create the new account !',
-            'complete-link': `http://localhost:3000/sign-up?invite-link=${inviteLink.value}`,
-            'raw-value': inviteLink
+            'message': 'Sponsorship link created. Follow the complete link to create the new account !',
+            'complete-link': `${req.url.split('/api')[0]}/auth/register?sponsorship=${sponsorship.value}`,
+            'raw-value': sponsorship.value
         });
     } catch (error) {
         console.log('[INVITE_LINK_POST]', error);

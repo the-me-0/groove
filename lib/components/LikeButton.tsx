@@ -5,7 +5,6 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
-import { useUser } from '@/hooks/use-user';
 import axios from "axios";
 import {twMerge} from "tailwind-merge";
 
