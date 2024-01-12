@@ -9,10 +9,6 @@ export async function POST(
     try {
         const profile = await currentProfile();
 
-        if (!profile) {
-            return new NextResponse('Unauthorized', { status: 401 });
-        }
-
         if (!params.songId) {
             return new NextResponse('Missing fields', { status: 400 });
         }
@@ -47,10 +43,6 @@ export async function GET(
 ) {
     try {
         const profile = await currentProfile();
-
-        if (!profile) {
-            return new NextResponse('Unauthorized', { status: 401 });
-        }
 
         if (!params.songId) {
             return new NextResponse('Missing fields', { status: 400 });
@@ -92,10 +84,6 @@ export async function DELETE(
 ) {
     try {
         const profile = await currentProfile();
-
-        if (!profile) {
-            return new NextResponse('Unauthorized', { status: 401 });
-        }
 
         if (!params.songId) {
             return new NextResponse('Missing fields', { status: 400 });

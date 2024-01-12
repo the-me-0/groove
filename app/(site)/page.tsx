@@ -1,6 +1,5 @@
 import Header from '@/lib/components/Header';
 import ListItem from '@/lib/components/ListItem';
-import {initialProfile} from '@/lib/initial-profile';
 import React from "react";
 import getSongs from "@/lib/actions/getSongs";
 import PageContent from '../../lib/components/PageContent';
@@ -10,7 +9,6 @@ import getPlaylists from '@/lib/actions/getPlaylists';
 export const revalidate = 0;
 
 export default async function Home() {
-  await initialProfile(); // We don't need the returned value there, but we still need to generate an account for new users
   const songs = await getSongs();
   const playlists = await getPlaylists();
 

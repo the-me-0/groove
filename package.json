@@ -11,8 +11,7 @@
     "migrate-prod": "dotenv -e .env.production -- npx prisma migrate deploy"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.27.1",
-    "@clerk/themes": "^1.7.9",
+    "@auth/prisma-adapter": "^1.0.14",
     "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.6.0",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -21,10 +20,12 @@
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
     "axios": "^1.6.2",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.292.0",
     "next": "14.0.1",
+    "next-auth": "^5.0.0-beta.4",
     "next-themes": "^0.2.1",
     "query-string": "^8.1.0",
     "react": "^18",
@@ -40,6 +41,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

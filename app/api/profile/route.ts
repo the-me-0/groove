@@ -7,10 +7,6 @@ export async function GET(
     try {
         const profile = currentProfile();
 
-        if (!profile) {
-            return new NextResponse('Unauthorized', { status: 401 });
-        }
-
         return NextResponse.json(profile);
     } catch (error) {
         console.log('[PROFILE_GET]', error);
