@@ -52,9 +52,7 @@ Project global advancement
 - clone this repository with `git clone https://github.com/the-me-0/groove-web.git`
 - execute `cd groove-web/`
 - run `docker compose up` and wait for docker to download and build the needed images and containers
-- create a [Clerk organization](https://clerk.com/)
 - create a `.env` file based upon the `.env.example`
-- copy your clerk keys into the `.env`
 - install dependencies with `npm i`
 - run `docker compose up` in order to start your database and wait for it to initialise
 - run `npw prisma generate` and `npm run migrate` and name the migration "main" <- generates DB types for typescript & creates the DB in docker
