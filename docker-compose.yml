@@ -22,7 +22,8 @@ services:
     restart: always
     container_name: groove-web
     ports:
-      - "4000:4000"
+      - "80:80"
+      - "443:443"
     volumes:
       - type: volume
         source: groove_data

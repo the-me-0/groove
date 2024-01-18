@@ -25,9 +25,14 @@ export async function POST(
             data: {}
         });
 
+        let completeLink = `${req.url.split('/api')[0]}/auth/register?sponsorship=${sponsorship.value}`;
+        if (process.env.NODE_ENV === 'production') {
+            completeLink = `${process.env.PRODUCTION_URL}/auth/register?sponsorship=${sponsorship.value}`;
+        }
+
         return NextResponse.json({
             'message': 'Sponsorship link created. Follow the complete link to create the new account !',
-            'complete-link': `${req.url.split('/api')[0]}/auth/register?sponsorship=${sponsorship.value}`,
+            'complete-link': completeLink,
             'raw-value': sponsorship.value
         });
     } catch (error) {

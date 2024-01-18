@@ -46,6 +46,18 @@ COPY nginx-config/nginx.conf /etc/nginx/nginx.conf
 COPY nginx-config/default.conf /etc/nginx/conf.d/default.conf
 # Robot.txt file
 COPY nginx-config/robots.txt /app/www/robots.txt
+# SSL certificates copy
+RUN mkdir /etc/nginx/certificates
+COPY nginx-config/certificates/cert.pem /etc/nginx/certificates/cert.pem
+COPY nginx-config/certificates/chain.pem /etc/nginx/certificates/chain.pem
+COPY nginx-config/certificates/privkey.pem /etc/nginx/certificates/privkey.pem
+# SSL certificates check
+RUN \
+  if ! [ -f /etc/nginx/certificates/cert.pem ]; then echo "cert.pem not found" && exit 1; \
+  elif ! [ -f /etc/nginx/certificates/chain.pem ]; then echo "chain.pem not found" && exit 1; \
+  elif ! [ -f /etc/nginx/certificates/privkey.pem ]; then echo "privkey.pem not found" && exit 1; \
+  fi
+
 # Create www songs & images directory
 RUN mkdir -p /app/www/songs/images
 
@@ -73,12 +85,8 @@ RUN chown -R nextjs.nodejs /app/www /app/www/songs /app/www/songs/images /run /v
 
 USER nextjs
 
-# We expose 4000 for nginx
-EXPOSE 4000
-
 # We run nextjs app on 3000
 ENV PORT 3000
-# set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
 # server.js is created by next build from the standalone output

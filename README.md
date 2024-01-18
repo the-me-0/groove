@@ -76,7 +76,7 @@ Further automation will be implemented in the future to make the docker hub repo
 Personal note:
 As there is no CI/CD for now, I need to push the new images manually. Here are some docker commands :
 - `docker login`
-- `docker build -t phoenlxx/groove-web:<tagname>`
+- `docker build -t "phoenlxx/groove-web:<tagname>" .`
 - `docker tag <oldTagname> <newTagname>`
 - `docker push phoenlxx/groove-web:<tagname>`
 

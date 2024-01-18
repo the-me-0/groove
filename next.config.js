@@ -7,9 +7,9 @@ const nextConfig = {
         loaderFile: './lib/image-loader.ts',
         remotePatterns: [
             {
-                protocol: 'http',
+                protocol: 'https',
                 hostname: 'localhost',
-                port: '4000',
+                port: '443',
                 pathname: '/songs/images/**',
             },
         ],
