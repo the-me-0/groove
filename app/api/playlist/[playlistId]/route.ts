@@ -39,7 +39,7 @@ export async function PATCH(
       let imageNameSliced = imageFile.name.split('.'); // ease the extension definition for next line
       const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
       const imageData = await imageFile.arrayBuffer();
-      fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
+      fs.writeFileSync((prodEnv ? './www/groove' : './public') + uploadImageLocation, Buffer.from(imageData));
 
       editedData.imageUrl = uploadImageLocation;
     } else {

@@ -59,7 +59,7 @@ RUN \
   fi
 
 # Create www songs & images directory
-RUN mkdir -p /app/www/songs/images
+RUN mkdir -p /app/www/groove/songs/images
 
 # We copy the prisma folder to have access to the migrations
 COPY --from=builder /app/prisma ./prisma
@@ -81,7 +81,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
-RUN chown -R nextjs.nodejs /app/www /app/www/songs /app/www/songs/images /run /var/lib/nginx /var/log/nginx
+RUN chown -R nextjs.nodejs /app/www /app/www/groove /app/www/groove/songs /app/www/groove/songs/images /run /var/lib/nginx /var/log/nginx
 
 USER nextjs
 

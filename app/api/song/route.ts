@@ -26,13 +26,13 @@ export async function POST(req: NextRequest) {
         // -- Song Save
         const uploadSongLocation = `/songs/${uploadTag}.mp3`;
         const songData = await songFile.arrayBuffer();
-        fs.writeFileSync((prodEnv ? './www' : './public') + uploadSongLocation, Buffer.from(songData));
+        fs.writeFileSync((prodEnv ? './www/groove' : './public') + uploadSongLocation, Buffer.from(songData));
 
         // -- Image Save
         let imageNameSliced = imageFile.name.split('.');
         const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
         const imageData = await imageFile.arrayBuffer();
-        fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
+        fs.writeFileSync((prodEnv ? './www/groove' : './public') + uploadImageLocation, Buffer.from(imageData));
 
         await db.song.create({
             data: {
