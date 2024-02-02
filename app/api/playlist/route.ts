@@ -8,16 +8,12 @@ export async function POST(
   try {
     const profile = await currentProfile();
 
-    if (!profile) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
-
     const playlist = await db.playlist.create({
       data: {
         name: `${profile.name}'s playlist`,
-        imageUrl: '',
+        imageUrl: '/api/assets/images/playlist-default.png',
         type: "PLAYLIST",
-        artist: profile.name,
+        artist: profile.name || 'dummy',
         profileId: profile.id
       }
     });

@@ -17,7 +17,7 @@ export async function PATCH(
     const profile = await currentProfile();
 
     if (!profile) {
-      return new NextResponse('Unauthorized', { status: 401 });
+      return new NextResponse('Unauthorized', {status: 401});
     }
 
     if (!params.playlistId) {
@@ -37,15 +37,15 @@ export async function PATCH(
 
     if (imageFile) {
       const uuid = uuidv4();
-      const uploadTag = `${profile.name.replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
+      const uploadTag = `${(profile.name || 'dummy').replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
 
       // -- Image Save
-      let imageNameSliced = imageFile.name.split('.'); // ease the extension definition for next line
-      const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
+      const uploadImageLocation = `./private/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
+      const imageApiLocation = `/api/assets/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
       const imageData = await imageFile.arrayBuffer();
-      fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
+      fs.writeFileSync(uploadImageLocation, Buffer.from(imageData));
 
-      editedData.imageUrl = uploadImageLocation;
+      editedData.imageUrl = imageApiLocation;
     } else {
       delete editedData.imageUrl;
     }

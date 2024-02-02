@@ -7,9 +7,8 @@ import {RxCaretLeft, RxCaretRight} from 'react-icons/rx';
 import {HiHome} from 'react-icons/hi';
 import {BiSearch} from 'react-icons/bi';
 import Button from '@/lib/components/Button';
-import {UserButton} from '@clerk/nextjs';
-import {neobrutalism} from '@clerk/themes';
 import toast from "react-hot-toast";
+import {onSignOut} from '@/lib/actions/onSignOut';
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -21,6 +20,10 @@ const Header: React.FC<HeaderProps> = ({
     className
 }) => {
     const router = useRouter();
+
+    const onLogout = () => {
+        onSignOut().then(r => {});
+    }
 
     return (
         <div
@@ -65,44 +68,23 @@ const Header: React.FC<HeaderProps> = ({
                 </div>
 
                 <div className='flex justify-between items-center gap-x-4'>
-                    <>
-                    {/* <div>
-                            <Button
-                                onClick={() => {}}
-                                className='bg-transparent text-neutral-300 font-medium'
-                            >
-                                Sign up
-                            </Button>
-                        </div>
-                        <div>
-                            <Button
-                                onClick={() => {}}
-                                className='bg-white px-6 py-2'
-                            >
-                                Log in
-                            </Button>
-                        </div> */}
-                        <div>
-                            <Button
-                                onClick={() => toast.error('Not available yet')}
-                                className='bg-transparent text-neutral-300 font-medium'
-                            >
-                                Get the android App
-                            </Button>
-                        </div>
-                        { /* <ModeToggle /> */ }
-                        <UserButton
-                          afterSignOutUrl='/'
-                          appearance={{
-                              baseTheme: neobrutalism,
-                              variables: {
-                                  colorBackground: '#005B41',
-                                  colorText: 'white',
-                                  colorPrimary: 'white' // transparent is also an option
-                              }
-                          }}
-                        />
-                    </>
+                    <div>
+                        <Button
+                          onClick={() => toast.error('Not available yet')}
+                          className='bg-transparent text-neutral-300 font-medium'
+                        >
+                            Get the android App
+                        </Button>
+                    </div>
+                    { /* <ModeToggle /> */}
+                    <div>
+                        <Button
+                          onClick={() => onLogout()}
+                          className='bg-white px-6 py-2 cursor-pointer'
+                        >
+                            Sign out
+                        </Button>
+                    </div>
                 </div>
             </div>
 

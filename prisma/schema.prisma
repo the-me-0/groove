@@ -12,24 +12,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ApiKey {
-  id      String @id @default(uuid())
-  value   String @default(uuid())
-  createdAt   DateTime @default(now())
-}
-
 model Profile {
-  id       String @id @default(uuid())
-  userId   String @unique
-  name     String @unique
-  imageUrl String @db.Text
-  email    String @db.Text
+  id            String @id @default(uuid())
+  name          String?
+  email         String? @unique
+  emailVerified DateTime?
+  image         String?
+  password      String? // optional as social login does not require password
 
   playlists       Playlist[] // The song the user has uploaded
   songs           Song[] // The playlist the user has created
   likedPlaylists  LikesOnPlaylists[]
   likedSongs      LikesOnSongs[]
-  inviteLinks     InviteLink[]
+  inviteLinks     Sponsorship[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -118,14 +113,12 @@ model SongsOnPlaylists {
   @@id([playlistId, songId])
 }
 
-model InviteLink {
+model Sponsorship {
   id        String    @id @default(uuid())
-  profileId String?
+  profileId String?   // first time user is created, this is null
   profile   Profile?  @relation(fields: [profileId], references: [id])
   value     String    @unique @default(uuid())
 
   createdAt DateTime  @default(now())
-  expiresAt DateTime  @default(dbgenerated("NOW() + interval '1 day'"))
-
   @@index([profileId])
 }

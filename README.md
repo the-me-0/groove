@@ -28,14 +28,17 @@ Project global advancement
 - [x] ~~ Overall review before **Beta 0.1** `--> Released !`
 - [x] Playlist creation
 - [x] Player update - loop, song duration & song progress
-- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [x] Clerk removal
 - [ ] Production Ready build & https `ongoing`
 - [ ] ~~ Overall review before **Beta 0.2**
 - [ ] Player shuffle option
+- [ ] Song page & share song option
 - [ ] Song deletion
 - [ ] Song queue display (page) & "Add to queue" option
 - [ ] Song search upgrade & security
 - [ ] ~~ Overall review before **Beta 0.3**
+- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [ ] ~~ Overall review before **Beta 0.4**
 - [ ] Mobile App (PWA)
 
 ## Start the project - development
@@ -49,9 +52,7 @@ Project global advancement
 - clone this repository with `git clone https://github.com/the-me-0/groove-web.git`
 - execute `cd groove-web/`
 - run `docker compose up` and wait for docker to download and build the needed images and containers
-- create a [Clerk organization](https://clerk.com/)
 - create a `.env` file based upon the `.env.example`
-- copy your clerk keys into the `.env`
 - install dependencies with `npm i`
 - run `docker compose up` in order to start your database and wait for it to initialise
 - run `npw prisma generate` and `npm run migrate` and name the migration "main" <- generates DB types for typescript & creates the DB in docker
@@ -75,7 +76,7 @@ Further automation will be implemented in the future to make the docker hub repo
 Personal note:
 As there is no CI/CD for now, I need to push the new images manually. Here are some docker commands :
 - `docker login`
-- `docker build -t phoenlxx/groove-web:<tagname>`
+- `docker build -t "phoenlxx/groove-web:<tagname>" .`
 - `docker tag <oldTagname> <newTagname>`
 - `docker push phoenlxx/groove-web:<tagname>`
 
@@ -90,7 +91,7 @@ As there is no CI/CD for now, I need to push the new images manually. Here are s
 ## Once up
 
 You will now need to generate an invitation link in order to create your first user.
-To do so, you have to send this post request : `curl -X POST "http://localhost:3000/api/invite-link?api-key=<replace-me>"`
+To do so, you have to send this post request : `curl -X POST "http://localhost:3000/api/sponsorship?api-key=<replace-me>"`
 
 ## How to reproduce
 

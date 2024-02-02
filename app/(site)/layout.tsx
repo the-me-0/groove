@@ -5,7 +5,7 @@ import Player from '@/lib/components/player/Player';
 import getPlaylists from "@/lib/actions/getPlaylists";
 import getPlaylistsByProfileId from "@/lib/actions/getPlaylistsByProfileId";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export default async function MainLayout({
   children

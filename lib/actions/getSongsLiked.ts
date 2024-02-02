@@ -5,11 +5,6 @@ import {db} from "@/lib/db";
 const getLikedSongs = async (): Promise<Song[]> => {
     const profile = await currentProfile();
 
-    if (!profile) {
-        console.log('Tried to get liked songs from profile without being logged in.');
-        return [];
-    }
-
     const likeRelations: (LikesOnSongs & { song: Song })[] = await db.likesOnSongs.findMany({
         where: {
             profileId: profile.id

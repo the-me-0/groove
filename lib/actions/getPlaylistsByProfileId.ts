@@ -4,20 +4,16 @@ import {currentProfile} from "@/lib/current-profile";
 
 const getPlaylistsByProfileId = async (): Promise<Playlist[]> => {
   const profile = await currentProfile();
-
   if (!profile) return [];
 
   const playlists = await db.playlist.findMany({
     where: {
       profileId: profile.id
-    },
-    orderBy: {
-      createdAt: 'desc'
     }
   });
 
   const formattedPlaylists: Playlist[] = playlists.map((playlist: Playlist) => {
-    if (!playlist.imageUrl) playlist.imageUrl = '/songs/images/playlist.png';
+    if (!playlist.imageUrl) playlist.imageUrl = '/api/assets/images/playlist.png';
     return playlist;
   })
 

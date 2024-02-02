@@ -14,12 +14,10 @@ import {useState} from "react";
 import Input from "@/lib/components/input";
 import Button from "@/lib/components/Button";
 import toast from "react-hot-toast";
-import { useUser } from "@/hooks/use-user";
 import {useRouter} from "next/navigation";
 
 export const UploadModal = () => {
     const router = useRouter();
-    const userContext = useUser();
     const [isLoading, setIsLoading] = useState(false);
 
     const { onOpen, isOpen, onClose, type, data } = useModal();
@@ -46,7 +44,7 @@ export const UploadModal = () => {
             const imageFile = values.image?.[0];
             const songFile = values.song?.[0];
 
-            if (!imageFile || !songFile || !userContext.user) {
+            if (!imageFile || !songFile) {
                 toast.error('Missing fields');
                 return;
             }

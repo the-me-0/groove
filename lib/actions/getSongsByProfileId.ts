@@ -4,18 +4,14 @@ import { currentProfile } from "@/lib/current-profile";
 
 const getSongsByProfileId = async (): Promise<Song[]> => {
     const profile = await currentProfile();
-
-    if (!profile) {
-        console.log('Tried to get songs from profile without being logged in.');
-        return [];
-    }
+    if (!profile) return [];
 
     const songs = await db.song.findMany({
         where: {
             profileId: profile.id
         },
         orderBy: {
-            createdAt: 'desc'
+            createdAt: "desc"
         }
     });
 
