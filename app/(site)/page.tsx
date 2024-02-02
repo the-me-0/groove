@@ -5,10 +5,9 @@ import getSongs from "@/lib/actions/getSongs";
 import PageContent from '../../lib/components/PageContent';
 import getPlaylists from '@/lib/actions/getPlaylists';
 import {currentProfile} from '@/lib/current-profile';
-import {signOut} from '@/auth';
 
 // prevents this page to be cached, in order for it to always be up-to-date
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export default async function Home() {
   const profile = await currentProfile();
@@ -24,7 +23,7 @@ export default async function Home() {
           </h1>
           <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4'>
             <ListItem
-              image='/songs/images/liked.png'
+              image='/api/assets/images/liked.png'
               name='Liked Songs'
               href='liked'
             />

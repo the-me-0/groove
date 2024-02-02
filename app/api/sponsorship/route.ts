@@ -27,7 +27,7 @@ export async function POST(
 
         let completeLink = `${req.url.split('/api')[0]}/auth/register?sponsorship=${sponsorship.value}`;
         if (process.env.NODE_ENV === 'production') {
-            completeLink = `${process.env.PRODUCTION_URL}/auth/register?sponsorship=${sponsorship.value}`;
+            completeLink = `${process.env.PRODUCTION_URL}auth/register?sponsorship=${sponsorship.value}`;
         }
 
         return NextResponse.json({
