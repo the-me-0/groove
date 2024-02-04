@@ -31,6 +31,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: 'Email already exists' };
   }
 
+  console.log('[REGISTER] Using sponsorship key to create user "', username, '", with mail "', email, '"');
+
   await db.profile.create({
     data: {
       name: username,
@@ -39,8 +41,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     },
   });
 
+  // one use only sponsorship
+  await db.sponsorship.delete({
+    where: {
+      id: existingSponsorship.id
+    }
+  });
+
   // TODO: Send verification token email
-  // TODO: Delete sponsorship link (unique use)
 
   return { success: 'User created!' };
 }

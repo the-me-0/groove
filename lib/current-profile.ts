@@ -1,6 +1,7 @@
 import { Profile } from "@prisma/client";
 import { auth } from '@/auth';
 import { getProfileById } from '@/lib/actions/profile';
+import {redirect} from 'next/navigation';
 
 export const currentProfile = async (): Promise<Profile> => {
     const session = await auth();
@@ -13,7 +14,7 @@ export const currentProfile = async (): Promise<Profile> => {
 
     if (!profile) {
         console.error('[CURR_PROFILE]', 'No profile found for user', session.user.id);
-        throw new Error('No profile found for user');
+        redirect('/logout');
     }
 
     return profile;

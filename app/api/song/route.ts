@@ -3,6 +3,7 @@ import { currentProfile } from "@/lib/current-profile";
 import fs from "fs";
 import { v4 as uuidv4 } from 'uuid';
 import {db} from "@/lib/db";
+import path from 'node:path';
 
 export async function POST(req: NextRequest) {
     try {
@@ -23,22 +24,25 @@ export async function POST(req: NextRequest) {
         const uuid = uuidv4();
         const uploadTag = `${author.replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
 
+        console.log(req.url)
+
         // -- Song Save
-        const uploadSongLocation = `/songs/${uploadTag}.mp3`;
+        const uploadSongLocation = `./private/songs/${uploadTag}.mp3`;
+        const songApiLocation = `/api/assets/songs/${uploadTag}.mp3`;
         const songData = await songFile.arrayBuffer();
-        fs.writeFileSync((prodEnv ? './www' : './public') + uploadSongLocation, Buffer.from(songData));
+        fs.writeFileSync(uploadSongLocation, Buffer.from(songData));
 
         // -- Image Save
-        let imageNameSliced = imageFile.name.split('.');
-        const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
+        const uploadImageLocation = `./private/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
+        const imageApiLocation = `/api/assets/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
         const imageData = await imageFile.arrayBuffer();
-        fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
+        fs.writeFileSync(uploadImageLocation, Buffer.from(imageData));
 
         await db.song.create({
             data: {
                 name: title,
-                imageUrl: uploadImageLocation,
-                songUrl: uploadSongLocation,
+                imageUrl: imageApiLocation,
+                songUrl: songApiLocation,
                 artist: author,
                 profileId: profile.id
             }

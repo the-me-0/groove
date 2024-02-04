@@ -1,22 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
     experimental: {
-        instrumentationHook: true
+        serverActions: {
+            allowedOrigins: ['https://groove.tars.digital'],
+        }
     },
+    reactStrictMode: false,
     output: "standalone",
     images: {
         loader: 'custom',
-        loaderFile: './lib/image-loader.ts',
-        remotePatterns: [
-            {
-                protocol: 'http',
-                hostname: 'localhost',
-                port: '4000',
-                pathname: '/songs/images/**',
-            },
-        ],
-    },
+        loaderFile: 'lib/image-loader.ts',
+    }
 }
 
 module.exports = nextConfig

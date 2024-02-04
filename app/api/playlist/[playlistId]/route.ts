@@ -16,6 +16,10 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
 
+    if (!profile) {
+      return new NextResponse('Unauthorized', {status: 401});
+    }
+
     if (!params.playlistId) {
       return new NextResponse('Missing playlistId', { status: 400 });
     }
@@ -36,12 +40,12 @@ export async function PATCH(
       const uploadTag = `${(profile.name || 'dummy').replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
 
       // -- Image Save
-      let imageNameSliced = imageFile.name.split('.'); // ease the extension definition for next line
-      const uploadImageLocation = `/songs/images/${uploadTag}.${imageNameSliced[imageNameSliced.length-1]}`;
+      const uploadImageLocation = `./private/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
+      const imageApiLocation = `/api/assets/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
       const imageData = await imageFile.arrayBuffer();
-      fs.writeFileSync((prodEnv ? './www' : './public') + uploadImageLocation, Buffer.from(imageData));
+      fs.writeFileSync(uploadImageLocation, Buffer.from(imageData));
 
-      editedData.imageUrl = uploadImageLocation;
+      editedData.imageUrl = imageApiLocation;
     } else {
       delete editedData.imageUrl;
     }

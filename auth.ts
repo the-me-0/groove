@@ -3,6 +3,9 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 
 import { db } from '@/lib/db';
 import authConfig from '@/auth.config';
+import {NextRequest} from 'next/server';
+import {Session} from '@auth/core/types';
+import {onSignOut} from '@/lib/actions/onSignOut';
 
 export const {
   handlers: { GET, POST },
@@ -22,4 +25,5 @@ export const {
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
   ...authConfig,
+  trustHost: true,
 })

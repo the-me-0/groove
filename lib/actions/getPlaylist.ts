@@ -10,7 +10,7 @@ const getPlaylist = async (playlistId: string): Promise<Playlist | null> => {
 
   if (!playlist) return null;
 
-  if (!playlist.imageUrl) playlist.imageUrl = '/songs/images/playlist.png';
+  if (!playlist.imageUrl) playlist.imageUrl = '/api/assets/images/playlist-default.png';
 
   return playlist;
 }

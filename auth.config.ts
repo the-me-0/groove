@@ -4,6 +4,8 @@ import bcrypt from 'bcryptjs';
 
 import { LoginSchema } from '@/lib/schemas';
 import { getProfileByEmail } from '@/lib/actions/profile';
+import {NextRequest, NextResponse} from 'next/server';
+import type {Awaitable, Session} from '@auth/core/types';
 
 export default {
   providers: [
@@ -26,7 +28,7 @@ export default {
         }
 
         return null;
-      }
+      },
     })
-  ],
+  ]
 } satisfies NextAuthConfig;

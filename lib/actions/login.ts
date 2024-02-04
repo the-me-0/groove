@@ -20,7 +20,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn('credentials', {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      // redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
 
     // Successful signIn will stop the execution of this function before, but we need this return to satisfy TypeScript

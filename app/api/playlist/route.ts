@@ -11,7 +11,7 @@ export async function POST(
     const playlist = await db.playlist.create({
       data: {
         name: `${profile.name}'s playlist`,
-        imageUrl: '',
+        imageUrl: '/api/assets/images/playlist-default.png',
         type: "PLAYLIST",
         artist: profile.name || 'dummy',
         profileId: profile.id
