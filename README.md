@@ -12,7 +12,7 @@
 
 ## Introduction
 
-**Groove** is vowed to be a private spotify-like application, nearly entirely self-hosted, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio »'s tutorial available [here](https://www.youtube.com/watch?v=2aeMRB8LL4o).
+**Groove** is vowed to be a private spotify-like application, **entirely self-hosted**, developed by [Noah Philippe](https://github.com/the-me-0), based on « Code With Antonio »'s tutorial available [here](https://www.youtube.com/watch?v=2aeMRB8LL4o).
 
 ## Roadmap
 
@@ -29,17 +29,21 @@ Project global advancement
 - [x] Playlist creation
 - [x] Player update - loop, song duration & song progress
 - [x] Clerk removal
-- [ ] Production Ready build & https `ongoing`
-- [ ] ~~ Overall review before **Beta 0.2**
+- [x] Production Ready build & https
+- [x] ~~ Overall review before **Beta 0.2** `--> Released !`
 - [ ] Player shuffle option
-- [ ] Song page & share song option
-- [ ] Song deletion
+- [ ] Song page & share song option `ongoing - share part done`
+- [ ] Song & playlist deletion
 - [ ] Song queue display (page) & "Add to queue" option
-- [ ] Song search upgrade & security
+- [ ] Song search upgrade
 - [ ] ~~ Overall review before **Beta 0.3**
-- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [ ] Spotify integration - song upload using spotify-down
 - [ ] ~~ Overall review before **Beta 0.4**
 - [ ] Mobile App (PWA)
+
+**BONUS :**
+- [x] Non-NGINX dependant
+- [ ] songs start to play while they load `ongoing`
 
 ## Start the project - development
 
@@ -49,24 +53,16 @@ Project global advancement
 
 ### How to run
 
-- clone this repository with `git clone https://github.com/the-me-0/groove-web.git`
-- execute `cd groove-web/`
-- run `docker compose up` and wait for docker to download and build the needed images and containers
+- clone this repository with `git clone https://github.com/the-me-0/groove.git`
+- execute `cd groove/`
+- run `docker compose up -d` and wait for docker to download, build and start the needed images and containers
 - create a `.env` file based upon the `.env.example`
 - install dependencies with `npm i`
-- run `docker compose up` in order to start your database and wait for it to initialise
-- run `npw prisma generate` and `npm run migrate` and name the migration "main" <- generates DB types for typescript & creates the DB in docker
+- run `npw prisma generate` and `npx prisma db push` <- generates DB types for typescript & creates the DB model in docker container
 - run the project using `npm run dev`
 
 ## Start the project - deployment/production
-
-**This project is still under active development.**
-This project will *very* soon be pushed in production. As this is still an early version (beta), everything might not yet be ready.
-As much of the work has already been done for the deployment, here's how things should work :
-- The *main* branch of the repository contains the production version of the application
-- The `compose.yml` file contains another container called "web", we have nginx config files in a folder and a `Dockerfile` appeared
-- The project is meant to be hosted entirely on Docker, so a single `docker compose up --build` will start the application
-- After ~ 2 minutes of build and start-up, the project should be up and running on localhost:4000 !
+*This part will soon be filled with more information. The latest release ([v0.1.2-beta Solid Start](https://github.com/the-me-0/groove/releases/tag/v0.1.2-beta)) is **production-ready** and currently used in my own production server.*
 
 **IMPORTANT NOTICE**
 The production build is pushed manually (for now) to the docker hub, and available [here](https://hub.docker.com/repository/docker/phoenlxx/groove-web/general).
