@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         }
 
         const uuid = uuidv4();
-        const uploadTag = `${author.replace(/\s+/g, '-').toLowerCase()}_${uuid}`;
+        const uploadTag = `${author.replace(/\s+/g, '-').replace(/[^\w-]/g, '').toLowerCase()}_${uuid}`;
 
         console.log(req.url)
 
