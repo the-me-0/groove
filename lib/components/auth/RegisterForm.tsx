@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import {useEffect, useState, useTransition} from 'react';
+import { useState, useTransition} from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { RegisterSchema } from '@/lib/schemas';
@@ -20,17 +20,15 @@ import { Button } from '@/lib/shadcn-components/ui/button';
 import { FormError } from '@/lib/components/FormError';
 import { FormSuccess } from '@/lib/components/FormSuccess';
 import { register } from '@/lib/actions/register';
+import {useSearchParams} from 'next/navigation';
 
-interface RegisterFormProps {
-  sponsorship: string | null;
-}
-
-export const RegisterForm = ({
-  sponsorship
-}: RegisterFormProps) => {
+export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const searchParams = useSearchParams();
+
+  const sponsorship = searchParams.get('sponsorship');
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),

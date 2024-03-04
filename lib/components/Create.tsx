@@ -50,7 +50,7 @@ const Create: React.FC = () => {
         className='w-40 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]'
       >
         <DropdownMenuItem
-          onClick={() => onOpen('upload')}
+          onClick={() => onOpen('new-upload')}
           className='text-neutral-300 px-3 py-2 text-sm cursor-pointer'
         >
           <Disc className='h-4 w-4' />

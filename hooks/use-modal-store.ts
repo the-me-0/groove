@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import {Playlist} from "@prisma/client";
 
-export type ModalType = 'upload' | 'edit-playlist';
+export type ModalType = 'upload' | 'edit-playlist' | 'new-upload';
 
 interface ModalData {
     playlist?: Playlist

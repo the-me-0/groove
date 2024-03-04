@@ -44,6 +44,9 @@ model Song {
   likesOnSongs     LikesOnSongs[] // likes on this song
   songsOnPlaylists SongsOnPlaylists[]
 
+  // The share links for this song
+  shareLinks SongShareLink[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -73,6 +76,14 @@ model Playlist {
   updatedAt DateTime @updatedAt
 
   @@index([profileId])
+}
+
+model SongShareLink {
+  id        String   @id @default(uuid())
+  songId    String
+  song      Song     @relation(fields: [songId], references: [id])
+  value     String   @unique @default(uuid())
+  createdAt DateTime @default(now())
 }
 
 // ManyToMany relations links

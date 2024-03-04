@@ -3,9 +3,6 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 
 import { db } from '@/lib/db';
 import authConfig from '@/auth.config';
-import {NextRequest} from 'next/server';
-import {Session} from '@auth/core/types';
-import {onSignOut} from '@/lib/actions/onSignOut';
 
 export const {
   handlers: { GET, POST },
@@ -15,7 +12,7 @@ export const {
 } = NextAuth({
   callbacks: {
     async session({ session, token }) {
-      if (token.sub && session.user) {
+      if (token?.sub && session.user) {
         session.user.id = token.sub;
       }
 

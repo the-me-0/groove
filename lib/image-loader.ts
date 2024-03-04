@@ -17,3 +17,8 @@ export default function myImageLoader({ src, width, quality }: { src: string; wi
 
   return `${origin}${src}?w=${width}&q=${quality || 75}`
 }
+
+
+const testFunction = (randomString: string): Array<number> => {
+  return [1, 2, 3];
+}

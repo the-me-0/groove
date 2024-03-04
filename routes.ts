@@ -1,10 +1,13 @@
 /**
  * An array of routes that are accessible to the public.
  * These routes are not protected by authentication.
+ * WATCH OUT: If you add a route here, all sub-routes will also be public.
  * @type {string[]}
  */
 export const publicRoutes = [
-  '/api/sponsorship' // has to be public so that we can send POST to create the first user
+  '/api/sponsorship', // has to be public so that we can send POST to create the first user
+  '/shared',
+  '/api/shared',
 ];
 
 /**
