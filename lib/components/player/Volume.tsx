@@ -5,10 +5,11 @@ import usePlayer from "@/hooks/player/use-player";
 
 const Volume: React.FC = () => {
     const player = usePlayer();
-    const [volume, setVolume] = useState(1);
+    const [volume, setVolume] = useState(player.volume);
 
     const VolumeIcon = player.volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
+    // stores the value of the volume from before the mute
     const oldValue = useRef(1);
 
     useEffect(() => {
