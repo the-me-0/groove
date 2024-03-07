@@ -3,7 +3,6 @@
 import usePlayer from "@/hooks/player/use-player";
 import useGetSongById from "@/hooks/use-get-song-by-id";
 import PlayerContentWrapper from "@/lib/components/player/PlayerContentWrapper";
-import {useState} from "react";
 
 const Player = () => {
     const player = usePlayer();

@@ -15,25 +15,17 @@ interface PlayerStore {
     setIsPlaying: (isPlaying: boolean) => void;
     onRepeat: boolean;
     setOnRepeat: (onRepeat: boolean) => void;
-    source: string;
+    source: string; // Place where the player is taking musics from (favorites, playlist name)
     bigPicture: boolean;
     toggleBigPicture: () => void;
-    duration: number;
-    setDuration: (duration: number) => void;
 
     // Other values
     volume: number;
-    fadeTime: number;
     setVolume: (volume: number) => void;
-    setFadeTime: (fadeTime: number) => void;
 
     // Handlers
     handlePlay: playHandler;
     setHandlePlay: (handlePlay: playHandler) => void;
-
-    // Sound
-    sound: any;
-    setSound: (sound: any) => void;
 }
 
 const usePlayer = create<PlayerStore>((set, getState) => ({
@@ -52,22 +44,14 @@ const usePlayer = create<PlayerStore>((set, getState) => ({
     source: '',
     bigPicture: false,
     toggleBigPicture: () => set({ bigPicture: !getState().bigPicture }),
-    duration: 0,
-    setDuration: (duration: number) => set({ duration: duration }),
 
     // Other values
     volume: 1,
-    fadeTime: 0,
-    setFadeTime: (fadeTime: number) => set({ fadeTime: fadeTime }),
     setVolume: (volume: number) => set({ volume: volume }),
 
     // Handlers
     handlePlay: () => { console.log('init handlePlay called') },
     setHandlePlay: (handlePlay: playHandler) => set({ handlePlay: handlePlay }),
-
-    // Sound
-    sound: null,
-    setSound: (sound: any) => set({ sound: sound }),
 }));
 
 export default usePlayer;
