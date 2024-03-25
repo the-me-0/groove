@@ -1,15 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { currentProfile } from "@/lib/current-profile";
+import {NextRequest, NextResponse} from 'next/server';
+import {currentProfile} from "@/lib/current-profile";
 import fs from "fs";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {db} from "@/lib/db";
-import path from 'node:path';
 
 export async function POST(req: NextRequest) {
     try {
         const profile = await currentProfile();
-
-        const prodEnv = process.env.NODE_ENV === "production";
 
         const formData = await req.formData();
         const title = formData.get('title') as string;

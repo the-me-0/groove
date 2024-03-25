@@ -9,7 +9,7 @@ function useClock() {
             timeOutId = setTimeout(() => {
                 setClock(new Date().getTime());
                 clockRunner();
-            }, 1000);
+            }, 50);
         }
         clockRunner();
 
