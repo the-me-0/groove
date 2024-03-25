@@ -6,7 +6,8 @@ const useOnPlay = (songs: Song[], source: string) => {
 
     const onPlay = (id: string) => {
         player.setId(id);
-        player.setIds(songs.map((song) => song.id), source);
+        // TODO: if we stored the songs directly, we could change L18 in Player.tsx, therefore removing a useless call to DB and fix the shared player issue
+        player.setIds(songs, source);
     }
 
     return onPlay;

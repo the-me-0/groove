@@ -12,11 +12,13 @@ import { getBreakpointValue } from '@/lib/getBreakpointValue';
 interface StandardPlayerProps {
   audioPlayer: HTMLAudioElement;
   song: Song;
+  hideLikeButton: boolean;
 }
 
 export const StandardPlayer: React.FC<StandardPlayerProps> = ({
   audioPlayer,
   song,
+  hideLikeButton,
 }) => {
   const { onPlay, onPlayPrevious, onPlayNext, onLoop } = usePlayerControls(audioPlayer);
   const player = usePlayer();
@@ -37,13 +39,15 @@ export const StandardPlayer: React.FC<StandardPlayerProps> = ({
               player.toggleBigPicture();
             }
           }}/>
-          <LikeButton songId={song.id} className={'hidden md:block'}/>
+          {!hideLikeButton && (
+            <LikeButton songId={song.id} className={`hidden md:block`}/>
+          )}
         </div>
       </div>
 
       {/* Desktop controller */}
-      <div className='flex flex-col h-full w-full items-end md:items-center'>
-        <div className='h-full flex justify-center items-center w-fit mr-0 sm:w-full max-w-[722px] gap-x-6'>
+      <div className='flex flex-col h-full items-end w-1/3 sm:w-auto md:w-1/3 md:items-center'>
+        <div className='h-full flex justify-center items-center w-fit mr-0 max-w-[722px] gap-x-6'>
           <Shuffle
             size={26}
             className={`hidden sm:inline text-neutral-400 cursor-pointer transition mx-4 ${false && 'text-spotify-green'}`}

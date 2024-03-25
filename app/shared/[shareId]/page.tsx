@@ -12,9 +12,6 @@ const Shared = async (
   
   if (!songShared) return redirect('/');
 
-  // TODO : make all like buttons disappear (or disappear only if no user)
-  // TODO : fix the loop issue (loop mode is not activated on the audio object when we force skip while loop is on)
-
   return (
     <div className='flex flex-col mt-5'>
       <SharedBanner originDate={songShared.createdAt} durationInHours={24} />

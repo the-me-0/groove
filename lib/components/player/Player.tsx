@@ -7,22 +7,28 @@ import useGetSongById from '@/hooks/use-get-song-by-id';
 import { StandardPlayer } from '@/lib/components/player/StandardPlayer';
 import { BigPicturePlayer } from '@/lib/components/player/BigPicturePlayer';
 
-export const Player = (): React.JSX.Element | null => {
+interface PlayerProps {
+  hideLikeButton: boolean;
+}
+
+export const Player: React.FC<PlayerProps> = ({
+  hideLikeButton
+}) => {
   const player = usePlayer();
-  const { song  } = useGetSongById(player.activeId);
+  const song = player.songs.find((song) => song.id === player.activeId);
   const [ audioPlayer, setAudioPlayer ] = useState<HTMLAudioElement | null>(null);
 
   const onEndReached = useCallback(() => {
     if (player.onRepeat) return;
 
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const nextSong = player.ids[currentIndex + 1];
+    const currentIndex = player.songs.findIndex((song) => song.id === player.activeId);
+    const nextSong = player.songs[currentIndex + 1];
 
     if (!nextSong) {
       // Go back to start of the queue
-      player.setId(player.ids[0]);
+      player.setId(player.songs[0].id);
     } else {
-      player.setId(nextSong);
+      player.setId(nextSong.id);
     }
   }, [player]);
   
@@ -58,8 +64,8 @@ export const Player = (): React.JSX.Element | null => {
     >
       {audioPlayer && (
         <>
-          <StandardPlayer audioPlayer={audioPlayer} song={song} />
-          <BigPicturePlayer audioPlayer={audioPlayer} song={song} />
+          <StandardPlayer audioPlayer={audioPlayer} song={song} hideLikeButton={hideLikeButton} />
+          <BigPicturePlayer audioPlayer={audioPlayer} song={song} hideLikeButton={hideLikeButton} />
         </>
       )}
     </div>

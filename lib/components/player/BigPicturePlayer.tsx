@@ -13,11 +13,13 @@ import {usePlayerControls} from '@/hooks/player/use-player-new-controls';
 interface BigPicturePlayerProps {
   audioPlayer: HTMLAudioElement;
   song: Song;
+  hideLikeButton: boolean;
 }
 
 export const BigPicturePlayer: React.FC<BigPicturePlayerProps> = ({
   audioPlayer,
   song,
+  hideLikeButton,
 }) => {
   const player = usePlayer();
   const { onPlay, onPlayPrevious, onPlayNext, onLoop } = usePlayerControls(audioPlayer);
@@ -50,7 +52,7 @@ export const BigPicturePlayer: React.FC<BigPicturePlayerProps> = ({
         <Share2 size={40} className='cursor-pointer rounded-xl hover:bg-gray-800/50 p-2'
                 onClick={() => handleShare()}/>
       </div>
-      <LargeMediaItem song={song}/>
+      <LargeMediaItem song={song} hideLikeButton={hideLikeButton} />
       <ProgressBar audioPlayer={audioPlayer} className='max-w-[420px]' />
       <div className='flex md:hidden col-auto items-center w-full justify-center'>
         <SkipBack

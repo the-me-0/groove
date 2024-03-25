@@ -35,15 +35,15 @@ export const usePlayerControls = (audioPlayer: HTMLAudioElement): PlayerControls
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ON PREVIOUS
   const onPlayPrevious = () => {
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const previousSong = player.ids[currentIndex - 1];
+    const currentIndex = player.songs.findIndex((song) => song.id === player.activeId);
+    const previousSong = player.songs[currentIndex - 1];
 
     if (!previousSong) {
       // Go to the last item of the queue
-      return player.setId(player.ids[player.ids.length - 1]);
+      return player.setId(player.songs[player.songs.length - 1].id);
     }
 
-    player.setId(previousSong)
+    player.setId(previousSong.id)
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,14 +53,14 @@ export const usePlayerControls = (audioPlayer: HTMLAudioElement): PlayerControls
     audioPlayer.loop = false;
     player.setOnRepeat(false);
 
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const nextSong = player.ids[currentIndex + 1];
+    const currentIndex = player.songs.findIndex((song) => song.id === player.activeId);
+    const nextSong = player.songs[currentIndex + 1];
 
     if (!nextSong) {
       // Go back to start of the queue
-      player.setId(player.ids[0]);
+      player.setId(player.songs[0].id);
     } else {
-      player.setId(nextSong);
+      player.setId(nextSong.id);
     }
   }
 

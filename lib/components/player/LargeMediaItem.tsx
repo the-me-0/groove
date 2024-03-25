@@ -11,13 +11,9 @@ interface LargeMediaItemProps {
 }
 
 const LargeMediaItem: React.FC<LargeMediaItemProps> = ({
-                                                         song,
-                                                         hideLikeButton
-                                                       }) => {
-  if (hideLikeButton === undefined) {
-    hideLikeButton = false;
-  }
-
+  song,
+  hideLikeButton = false
+}) => {
   return (
     <div
       className='flex flex-col items-center gap-y-3 w-full p-2 mb-4'
