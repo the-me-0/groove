@@ -1,7 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server';
-import {Stats} from 'node:fs';
-import fs from 'fs';
-import streamFile from '@/lib/stream-file';
+import {streamFileOptimized} from '@/lib/stream-file';
 import {getSongShareLinkWithSong} from '@/lib/actions/shareLink';
 
 export async function GET(
@@ -27,18 +25,7 @@ export async function GET(
     params.songName = params.songName.replace(/[^a-zA-Z\-_0-9. ]/g, "");
 
     const file = `./private/songs/${params.songName}`;
-    const stats: Stats = await fs.promises.stat(file);
-    const data: ReadableStream<Uint8Array> = streamFile(file);
-
-    return new NextResponse(data, {
-      status: 200,
-      headers: new Headers({
-        'content-disposition': `attachment; filename=${params.songName}.mp3`,
-        'content-type': 'audio/mpeg',
-        'content-length': stats.size + '',
-        'cache-control': 'public, max-age=31536000, immutable',
-      }),
-    });
+    return streamFileOptimized(file, req.headers, params.songName);
   } catch (error) {
     console.log('[ASSETS_SONG]', error);
     return new NextResponse('Internal Error', { status: 500 });

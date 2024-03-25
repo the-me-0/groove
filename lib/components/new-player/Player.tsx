@@ -6,6 +6,7 @@ import usePlayer from '@/hooks/player/use-player';
 import useGetSongById from '@/hooks/use-get-song-by-id';
 import { StandardPlayer } from '@/lib/components/new-player/StandardPlayer';
 import { BigPicturePlayer } from '@/lib/components/new-player/BigPicturePlayer';
+import { Wave as WaveObject } from "@foobar404/wave";
 
 export const Player = (): React.JSX.Element | null => {
   const player = usePlayer();
@@ -29,10 +30,14 @@ export const Player = (): React.JSX.Element | null => {
   useEffect(() => {
     if (song && !audioPlayer) {
       const audio = new Audio(song.songUrl);
-      audio.textContent = song.songUrl;
 
-      // When the song ends, skip to the next one
+      // wave setup
+      const canvas = document.createElement('canvas');
+      const wave = new WaveObject(audio, canvas);
+      player.setWave(wave, canvas);
+
       audio.onended = onEndReached;
+      audio.textContent = song.songUrl;
 
       setAudioPlayer(audio);
 
@@ -60,7 +65,7 @@ export const Player = (): React.JSX.Element | null => {
       {audioPlayer && (
         <>
           <StandardPlayer audioPlayer={audioPlayer} song={song} />
-          <BigPicturePlayer audioPlayer={audioPlayer} />
+          <BigPicturePlayer audioPlayer={audioPlayer} song={song} />
 
           {/* We add the audio element here once it is created */}
           {/*<div ref={ref => ref?.appendChild(audioPlayer)}></div>*/}

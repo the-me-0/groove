@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { Wave as WaveObject } from "@foobar404/wave";
 
 type playHandler = () => void;
 
@@ -22,6 +23,10 @@ interface PlayerStore {
     // Other values
     volume: number;
     setVolume: (volume: number) => void;
+
+    wave: WaveObject | null;
+    canvas: HTMLCanvasElement | null;
+    setWave: (wave: WaveObject, canvas: HTMLCanvasElement) => void;
 
     // Handlers
     handlePlay: playHandler;
@@ -48,6 +53,12 @@ const usePlayer = create<PlayerStore>((set, getState) => ({
     // Other values
     volume: 1,
     setVolume: (volume: number) => set({ volume: volume }),
+    wave: null,
+    canvas: null,
+    setWave: (wave: WaveObject, canvas: HTMLCanvasElement) => {
+        set({ wave: wave });
+        set({ canvas: canvas });
+    },
 
     // Handlers
     handlePlay: () => { console.log('init handlePlay called') },

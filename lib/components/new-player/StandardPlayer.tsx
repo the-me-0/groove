@@ -76,11 +76,6 @@ export const StandardPlayer: React.FC<StandardPlayerProps> = ({
 
       <div className='hidden md:flex min-w-fit justify-end items-center pr-2'>
         <VolumeBar audioPlayer={audioPlayer} />
-        <Maximize2
-          size={26}
-          className='hidden md:inline text-neutral-400 cursor-pointer mx-4 hover:text-white'
-          onClick={player.toggleBigPicture}
-        />
       </div>
     </>
   )
