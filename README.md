@@ -29,15 +29,20 @@ Project global advancement
 - [x] Playlist creation
 - [x] Player update - loop, song duration & song progress
 - [x] Clerk removal
-- [ ] Production Ready build & https `ongoing`
-- [ ] ~~ Overall review before **Beta 0.2**
-- [ ] Player shuffle option
-- [ ] Song page & share song option
+- [x] Production Ready build & https
+- [x] ~~ Overall review before **Beta 0.1.2** `--> Released !`
+Overall player upgrade:
+- [ ] Smoother volume
+- [ ] Song load indicator
+- [ ] Song load time upgrade
+- [ ] Randomized queue (shuffle)
+- [x] ~~ Overall review before **Beta 0.2**
+- [ ] Song page & share song option `--> share option done`
 - [ ] Song deletion
 - [ ] Song queue display (page) & "Add to queue" option
 - [ ] Song search upgrade & security
 - [ ] ~~ Overall review before **Beta 0.3**
-- [ ] Spotify integration - song upload using spotify-down `ongoing`
+- [ ] Spotify integration - song upload using spotify-down
 - [ ] ~~ Overall review before **Beta 0.4**
 - [ ] Mobile App (PWA)
 
