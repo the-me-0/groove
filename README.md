@@ -32,11 +32,11 @@ Project global advancement
 - [x] Production Ready build & https
 - [x] ~~ Overall review before **Beta 0.1.2** `--> Released !`
 Overall player upgrade:
-- [ ] Smoother volume
+- [x] Smoother volume
 - [ ] Song load indicator
-- [ ] Song load time upgrade
+- [x] Song load time upgrade
 - [ ] Randomized queue (shuffle)
-- [x] ~~ Overall review before **Beta 0.2**
+- [ ] ~~ Overall review before **Beta 0.2**
 - [ ] Song page & share song option `--> share option done`
 - [ ] Song deletion
 - [ ] Song queue display (page) & "Add to queue" option
