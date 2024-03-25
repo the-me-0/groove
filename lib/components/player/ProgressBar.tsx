@@ -19,17 +19,12 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 
   // Duration init
   useEffect(() => {
-    // duration is null ? then it's the first time, we need to initialise duration
-    if (duration === null) {
-      // if audioPlayer.duration returns NaN, we need to wait for the loadeddata event
-      // else, we can set the duration directly
-      if (isNaN(audioPlayer.duration)) {
-        audioPlayer.addEventListener("loadeddata", () => {
-          setDuration(Math.round(audioPlayer.duration));
-        });
-      } else {
+    if (isNaN(audioPlayer.duration)) {
+      audioPlayer.onloadedmetadata = () => {
         setDuration(Math.round(audioPlayer.duration));
       }
+    } else if (duration !== Math.round(audioPlayer.duration)) {
+      setDuration(Math.round(audioPlayer.duration));
     }
   }, [audioPlayer, duration]);
 
