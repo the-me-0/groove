@@ -14,13 +14,13 @@ const Shared = async (
   if (!songShared) return redirect('/');
 
   // TODO : make all like buttons disappear (or disappear only if no user)
+  // TODO : fix the duration issue (progress bar duration is 1 song late)
 
   return (
     <div className='flex flex-col mt-5'>
       <SharedBanner originDate={songShared.createdAt} durationInHours={24} />
       <LargeMediaItem song={songShared.song} hideLikeButton={true}/>
       <SharedPlayerPlay songShared={songShared} />
-      <Player />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/lib/components/providers/theme-provider'
 import ModalProvider from "@/lib/components/providers/ModalProvider";
 import React from "react";
 import {Toaster} from "react-hot-toast";
+import {Player} from '@/lib/components/player/Player';
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -31,6 +32,7 @@ export default function RootLayout({
             <Toaster />
           {children}
         </ThemeProvider>
+        <Player />
       </body>
     </html>
   )
