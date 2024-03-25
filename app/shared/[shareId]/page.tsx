@@ -3,7 +3,6 @@ import {redirect} from 'next/navigation';
 import LargeMediaItem from '@/lib/components/player/LargeMediaItem';
 import React from 'react';
 import SharedBanner from '@/lib/components/SharedBanner';
-import {Player} from '@/lib/components/player/Player';
 import {SharedPlayerPlay} from '@/lib/components/player/SharedPlayerPlay';
 
 const Shared = async (

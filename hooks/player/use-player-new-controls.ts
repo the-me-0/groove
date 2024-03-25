@@ -51,6 +51,7 @@ export const usePlayerControls = (audioPlayer: HTMLAudioElement): PlayerControls
   const onPlayNext = (forced: boolean = false) => {
     if (player.onRepeat && !forced) return;
     audioPlayer.loop = false;
+    player.setOnRepeat(false);
 
     const currentIndex = player.ids.findIndex((id) => id === player.activeId);
     const nextSong = player.ids[currentIndex + 1];
