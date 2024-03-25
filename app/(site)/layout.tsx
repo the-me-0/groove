@@ -1,7 +1,7 @@
 import Sidebar from '@/lib/components/Sidebar';
 import React from "react";
 import getSongsByProfileId from "@/lib/actions/getSongsByProfileId";
-import { Player } from '@/lib/components/new-player/Player';
+import { Player } from '@/lib/components/player/Player';
 import getPlaylistsByProfileId from "@/lib/actions/getPlaylistsByProfileId";
 
 export default async function MainLayout({

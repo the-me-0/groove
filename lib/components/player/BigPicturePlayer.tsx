@@ -7,7 +7,7 @@ import LargeMediaItem from '@/lib/components/player/LargeMediaItem';
 import {Song} from '@prisma/client';
 import {createSongShareLink} from '@/lib/actions/shareLink';
 import toast from 'react-hot-toast';
-import {ProgressBar} from '@/lib/components/new-player/ProgressBar';
+import {ProgressBar} from '@/lib/components/player/ProgressBar';
 import {usePlayerControls} from '@/hooks/player/use-player-new-controls';
 
 interface BigPicturePlayerProps {

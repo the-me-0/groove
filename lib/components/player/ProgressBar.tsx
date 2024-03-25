@@ -1,62 +1,76 @@
-import React, {useEffect, useState} from "react";
-import useClock from "@/hooks/player/use-clock";
-import {Slider} from "@/lib/shadcn-components/ui/slider";
-import {twMerge} from "tailwind-merge";
-import player from "@/lib/components/player/Player";
-import usePlayer from "@/hooks/player/use-player";
+import React, { useEffect, useState } from "react";
+import { Slider } from "@/lib/shadcn-components/ui/slider";
+import { twMerge } from "tailwind-merge";
+import useClock from '@/hooks/player/use-clock';
 
 interface ProgressBarProps {
-    sound: any,
-    duration: number,
-    className?: string,
+  audioPlayer: HTMLAudioElement,
+  className?: string,
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
-    sound,
-    duration,
-    className
+export const ProgressBar: React.FC<ProgressBarProps> = ({
+  audioPlayer,
+  className
 }) => {
-    const player = usePlayer();
-    const clock = useClock();
+  const clock = useClock();
+  const [songProgressBar, setSongProgressBar] = useState(0);
+  const [duration, setDuration] = useState<number | null>(null);
+  const [isMovingProgressBar, setIsMovingProgressBar] = useState(false);
 
-    const [isMovingProgressBar, setIsMovingProgressBar] = useState(false);
-    const [songProgressBar, setSongProgressBar] = useState(0);
-
-    const handleProgressChange = (value: number[]) => {
-        setIsMovingProgressBar(true);
-        setSongProgressBar(Math.round(value[0]));
+  // Duration init
+  useEffect(() => {
+    // duration is null ? then it's the first time, we need to initialise duration
+    if (duration === null) {
+      // if audioPlayer.duration returns NaN, we need to wait for the loadeddata event
+      // else, we can set the duration directly
+      if (isNaN(audioPlayer.duration)) {
+        audioPlayer.addEventListener("loadeddata", () => {
+          setDuration(Math.round(audioPlayer.duration));
+        });
+      } else {
+        setDuration(Math.round(audioPlayer.duration));
+      }
     }
+  }, [audioPlayer, duration]);
 
-    // Updates the position of the song progress if it's not being moved by user
-    useEffect(() => {
-        if (!isMovingProgressBar && sound) {
-            setSongProgressBar(Math.round(sound.seek()));
-        }
-    }, [sound, isMovingProgressBar, clock]);
-
-    const handleProgressCommit = (value: number[]) => {
-        sound.seek(value[0]);
-        setIsMovingProgressBar(false);
-        if (!player.isPlaying) {
-            player.handlePlay();
-        }
+  // Updates the position of the song progress
+  useEffect(() => {
+    if (!isMovingProgressBar && audioPlayer.currentTime !== songProgressBar) {
+      setSongProgressBar(audioPlayer.currentTime);
     }
+  }, [audioPlayer, songProgressBar, clock, isMovingProgressBar]);
 
-    return (
-        <div className={twMerge('flex justify-between w-full', className)}>
-            <p className='w-8'>{String(songProgressBar / 60).split('.')[0]}:{String(songProgressBar % 60).length === 1 ? '0' + songProgressBar % 60 : songProgressBar % 60}</p>
-            <Slider
-                defaultValue={[0]}
-                value={[songProgressBar]}
-                onValueChange={(value) => handleProgressChange(value)}
-                onValueCommit={(value) => handleProgressCommit(value)}
-                step={duration / 100000}
-                max={duration / 1000}
-                className='mx-2'
-            />
-            <p className='w-8'>{String(duration / 60000).split('.')[0]}:{String((duration / 1000) % 60).length === 1 ? '0' + String((duration / 1000) % 60).split('.')[0] : ((String((duration / 1000) % 60).split('.')[0].length === 1 ? '0': '') + String((duration / 1000) % 60).split('.')[0]) || '0:00'}</p>
-        </div>
-    );
+  const handleProgressChange = (value: number[]) => {
+    if (!isMovingProgressBar) setIsMovingProgressBar(true);
+    setSongProgressBar(Math.round(value[0]));
+  }
+
+  const handleProgressCommit = (value: number[]) => {
+    setIsMovingProgressBar(false);
+    audioPlayer.currentTime = value[0];
+  }
+
+  return (
+    <div className={twMerge('flex justify-between w-full', className)}>
+      {duration !== null && (
+        <>
+          <p
+            className='w-8'>{String(Math.round(songProgressBar) / 60).split('.')[0]}:{String(Math.round(songProgressBar) % 60).length === 1 ? '0' + Math.round(songProgressBar) % 60 : Math.round(songProgressBar) % 60}
+          </p>
+          <Slider
+            defaultValue={[0]}
+            value={[songProgressBar]}
+            onValueChange={(value) => handleProgressChange(value)}
+            onValueCommit={(value) => handleProgressCommit(value)}
+            step={duration / 10000}
+            max={duration}
+            className='mx-2'
+          />
+          <p
+            className='w-8'>{String(duration / 60).split('.')[0]}:{String(duration % 60).length === 1 ? '0' + String(duration % 60).split('.')[0] : ((String(duration % 60).split('.')[0].length === 1 ? '0' : '') + String(duration % 60).split('.')[0]) || '0:00'}
+          </p>
+        </>
+      )}
+    </div>
+  );
 }
-
-export default ProgressBar;
