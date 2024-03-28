@@ -6,6 +6,7 @@ import usePlayer from '@/hooks/player/use-player';
 import useGetSongById from '@/hooks/use-get-song-by-id';
 import { StandardPlayer } from '@/lib/components/player/StandardPlayer';
 import { BigPicturePlayer } from '@/lib/components/player/BigPicturePlayer';
+import {MarsStandardPlayer} from '@/lib/components/player/MarsStandardPlayer';
 
 interface PlayerProps {
   hideLikeButton: boolean;
@@ -64,7 +65,8 @@ export const Player: React.FC<PlayerProps> = ({
     >
       {audioPlayer && (
         <>
-          <StandardPlayer audioPlayer={audioPlayer} song={song} hideLikeButton={hideLikeButton} />
+          {/*<StandardPlayer audioPlayer={audioPlayer} song={song} hideLikeButton={hideLikeButton} />*/}
+          <MarsStandardPlayer audioPlayer={audioPlayer} song={song} hideLikeButton={hideLikeButton} />
           <BigPicturePlayer audioPlayer={audioPlayer} song={song} hideLikeButton={hideLikeButton} />
         </>
       )}

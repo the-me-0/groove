@@ -13,21 +13,26 @@ export async function POST(req: NextRequest) {
         const author = formData.get('author') as string;
         const songFile = formData.get('songFile') as File;
         const imageFile = formData.get('imageFile') as File;
+        // We parse it even though we stringify it later because we want to make sure it's a valid JSON
+        const parsedWaveData = JSON.parse(formData.get('parsedWaveData') as string);
 
-        if (!title || !author || !songFile || !imageFile) {
+        if (!title || !author || !songFile || !imageFile || !parsedWaveData) {
             return new NextResponse('Missing fields', { status: 400 });
         }
 
         const uuid = uuidv4();
         const uploadTag = `${author.replace(/\s+/g, '-').replace(/[^\w-]/g, '').toLowerCase()}_${uuid}`;
 
-        console.log(req.url)
-
         // -- Song Save
         const uploadSongLocation = `./private/songs/${uploadTag}.mp3`;
         const songApiLocation = `/api/assets/songs/${uploadTag}.mp3`;
         const songData = await songFile.arrayBuffer();
         fs.writeFileSync(uploadSongLocation, Buffer.from(songData));
+
+        // -- Wave Save
+        const uploadWaveLocation = `./private/waves/${uploadTag}.json`;
+        const waveApiLocation = `/api/assets/waves/${uploadTag}.json`;
+        fs.writeFileSync(uploadWaveLocation, JSON.stringify(parsedWaveData));
 
         // -- Image Save
         const uploadImageLocation = `./private/images/${uploadTag}.${imageFile.name.split('.').pop()}`;
@@ -40,6 +45,7 @@ export async function POST(req: NextRequest) {
                 name: title,
                 imageUrl: imageApiLocation,
                 songUrl: songApiLocation,
+                waveUrl: waveApiLocation,
                 artist: author,
                 profileId: profile.id
             }

@@ -8,7 +8,7 @@ import {Song} from '@prisma/client';
 import {createSongShareLink} from '@/lib/actions/shareLink';
 import toast from 'react-hot-toast';
 import {ProgressBar} from '@/lib/components/player/ProgressBar';
-import {usePlayerControls} from '@/hooks/player/use-player-new-controls';
+import {usePlayerControls} from '@/hooks/player/use-player-controls';
 
 interface BigPicturePlayerProps {
   audioPlayer: HTMLAudioElement;

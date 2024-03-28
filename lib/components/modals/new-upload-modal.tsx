@@ -15,9 +15,11 @@ import Input from "@/lib/components/input";
 import Button from "@/lib/components/Button";
 import toast from "react-hot-toast";
 import {useRouter} from "next/navigation";
+import {useWaveParser} from '@/hooks/wave/useWaveParser';
 
 export const NewUploadModal = () => {
     const router = useRouter();
+    const { parseWaveData } = useWaveParser();
     const [isLoading, setIsLoading] = useState(false);
 
     const { onOpen, isOpen, onClose, type, data } = useModal();
@@ -41,19 +43,23 @@ export const NewUploadModal = () => {
         try {
             setIsLoading(true);
 
-            const imageFile = values.image?.[0];
-            const songFile = values.song?.[0];
+            const imageFile: File = values.image?.[0];
+            const songFile: File = values.song?.[0];
 
             if (!imageFile || !songFile) {
                 toast.error('Missing fields');
                 return;
             }
 
+            // We parse wave data from the song
+            const parsedWaveData = await parseWaveData(await songFile.arrayBuffer());
+
             const formData = new FormData();
             formData.append('title', values.title);
             formData.append('author', values.author);
             formData.append('songFile', songFile);
             formData.append('imageFile', imageFile);
+            formData.append('parsedWaveData', JSON.stringify(parsedWaveData));
 
             const response = await fetch('/api/song', {
                 method: 'POST',

@@ -35,6 +35,7 @@ model Song {
   name      String @unique
   imageUrl  String @db.Text
   songUrl   String @db.Text
+  waveUrl   String @db.Text
   artist    String
 
   // The user that uploaded the song
