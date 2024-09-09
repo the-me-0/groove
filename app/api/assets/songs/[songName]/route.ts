@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/current-profile';
-import { streamFile } from '@/lib/stream-file';
+import streamFile from '@/lib/stream-file';
+import mime from 'mime';
+import { sanitizeString} from '@/lib/sanitize-string';
 
 export async function GET(
   req: NextRequest,
@@ -18,12 +20,24 @@ export async function GET(
     }
 
     // remove any non-alphanumeric characters from the imageName, while keeping the dots, dashes, and underscores
-    params.songName = params.songName.replace(/[^a-zA-Z\-_0-9. ]/g, "");
+    params.songName = sanitizeString(params.songName);
 
     const file = `./private/songs/${params.songName}`;
-    return streamFile(file, params.songName);
+
+    const data: ReadableStream<Uint8Array> = streamFile(file, false);
+
+    let mimeType = mime.getType(file) || 'application/octet-stream';
+
+    return new NextResponse(data, {
+      status: 200,
+      headers: new Headers({
+        'Content-Encoding': '',
+        'content-type': mimeType,
+        'cache-control': 'public, max-age=604800, immutable',
+      }),
+    });
   } catch (error) {
-    console.log('[ASSETS_SONG]', error);
+    console.log('[API_ASSETS_SONGS]', error);
     return new NextResponse('Internal Error', { status: 500 });
   }
 }
