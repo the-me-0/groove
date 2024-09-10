@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { currentProfile } from '@/lib/current-profile';
+import { getUserSession } from '@/lib/current-profile';
 import streamFile from '@/lib/stream-file';
 import mime from 'mime';
-import {sanitizeString} from '@/lib/sanitize-string';
+import { sanitizeString } from '@/lib/utils';
+import { verifyShareKey } from '@/lib/actions/shareLink';
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { imageName: string } }
 ) {
   try {
-    const profile = await currentProfile();
+    const session = await getUserSession();
+    const shareKey = req.nextUrl.searchParams.get('share_key');
 
-    if (!profile) {
+    if (!session && !(shareKey && await verifyShareKey(shareKey))) {
       return new NextResponse('Unauthorized', {status: 401});
     }
 

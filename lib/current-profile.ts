@@ -3,19 +3,31 @@ import { auth } from '@/auth';
 import { getProfileById } from '@/lib/actions/profile';
 import {redirect} from 'next/navigation';
 
-export const currentProfile = async (): Promise<Profile> => {
+const getUserSession = async (): Promise<null | string> => {
     const session = await auth();
 
-    // User is not connected, redirect to the login/sign-in page
-    if (!session || !session.user) throw new Error('User not connected');
+    if (!session || !session.user) return null;
+
+    return session.user.id;
+}
+
+const currentProfile = async (): Promise<Profile> => {
+    const sessionId = await getUserSession();
+
+    if (!sessionId) {
+        console.error('[CURR_PROFILE]', 'No session found');
+        redirect('/logout');
+    }
 
     // Look for a profile that matches user's id
-    const profile = await getProfileById(session.user.id)
+    const profile = await getProfileById(sessionId);
 
     if (!profile) {
-        console.error('[CURR_PROFILE]', 'No profile found for user', session.user.id);
+        console.error('[CURR_PROFILE]', 'No profile found for sessionId', sessionId);
         redirect('/logout');
     }
 
     return profile;
 }
+
+export { getUserSession, currentProfile };

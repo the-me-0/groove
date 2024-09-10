@@ -3,10 +3,10 @@
 import {Song, SongShareLink} from "@prisma/client";
 import {db} from "@/lib/db";
 
-export const getSongShareLinkWithSong = async (songShareLinkValue: string): Promise<SongShareLink & { song: Song } | null> => {
+const getSongShareLinkWithSong = async (shareLinkValue: string): Promise<SongShareLink & { song: Song } | null> => {
   const songShareLink = await db.songShareLink.findUnique({
     where: {
-      value: songShareLinkValue
+      value: shareLinkValue
     },
     include: {
       song: true
@@ -17,7 +17,7 @@ export const getSongShareLinkWithSong = async (songShareLinkValue: string): Prom
   if (songShareLink && songShareLink.createdAt.getTime()/1000 + 60*60*24 < Date.now()/1000) {
     await db.songShareLink.delete({
       where: {
-        value: songShareLinkValue
+        value: shareLinkValue
       }
     });
     return null;
@@ -25,15 +25,26 @@ export const getSongShareLinkWithSong = async (songShareLinkValue: string): Prom
 
   // edit the song's link values to include the share value
   if (songShareLink) {
-    songShareLink.song.songUrl = `/api/shared/${songShareLinkValue}` + songShareLink.song.songUrl.split('/api')[1];
-    songShareLink.song.imageUrl = `/api/shared/${songShareLinkValue}` + songShareLink.song.imageUrl.split('/api')[1];
+    songShareLink.song.songUrl = songShareLink.song.songUrl + `?share_key=${shareLinkValue}`;
+    songShareLink.song.imageUrl = songShareLink.song.imageUrl + `?share_key=${shareLinkValue}`;
+    songShareLink.song.waveUrl = songShareLink.song.waveUrl + `?share_key=${shareLinkValue}`;
   }
 
   return songShareLink;
 }
 
-export const createSongShareLink = async (songId: string) => {
+const createSongShareLink = async (songId: string) => {
   return db.songShareLink.create({
     data: { songId }
   });
 }
+
+const verifyShareKey = async (shareKey: string): Promise<boolean> => {
+  return await db.songShareLink.findFirst({
+    where: {
+      value: shareKey
+    }
+  }) !== null;
+}
+
+export { getSongShareLinkWithSong, createSongShareLink, verifyShareKey };

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Song } from "@prisma/client";
 import React from "react";
 import PlayButton from "@/lib/components/PlayButton";
@@ -12,6 +11,7 @@ import {
 } from '@/lib/shadcn-components/ui/context-menu';
 import toast from 'react-hot-toast';
 import {createSongShareLink} from '@/lib/actions/shareLink';
+import {GImage} from '@/lib/components/main/GImage';
 
 interface SongItemProps {
   song: Song;
@@ -57,13 +57,9 @@ const SongItem: React.FC<SongItemProps> = ({
       <div className='relative aspect-square w-full h-full rounded-md overflow-hidden'>
         <ContextMenu>
           <ContextMenuTrigger>
-            <Image
-              priority={true}
-              sizes='100%'
-              className='object-cover'
+            <GImage
               src={song.imageUrl || '/images/music-placeholder.png'}
-              fill
-              alt='Image'
+              alt='Song cover'
             />
         </ContextMenuTrigger>
         <ContextMenuContent>

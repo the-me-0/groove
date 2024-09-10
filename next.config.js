@@ -7,10 +7,6 @@ const nextConfig = {
     },
     reactStrictMode: false,
     output: "standalone",
-    images: {
-        loader: 'custom',
-        loaderFile: 'lib/image-loader.ts',
-    }
 }
 
 module.exports = nextConfig

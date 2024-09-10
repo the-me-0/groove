@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { GImage } from "@/lib/components/main/GImage";
 import {Song, Playlist, PlaylistType} from '@prisma/client';
 import React from "react";
 import {BookHeadphones, Disc, LibraryBig} from "lucide-react";
@@ -36,12 +36,9 @@ const MediaItem: React.FC<MediaItemProps> = ({
             className='flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md'
         >
             <div className='relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden'>
-                <Image
-                    sizes='100%'
-                    fill
+                <GImage
                     src={data.imageUrl || "/images/music-placeholder.png"}
                     alt="MediaItem"
-                    className="object-cover"
                 />
             </div>
             <div className="flex flex-col gap-y-1 overflow-hidden">

@@ -7,7 +7,7 @@
 export const publicRoutes = [
   '/api/sponsorship', // has to be public so that we can send POST to create the first user
   '/shared',
-  '/api/shared',
+  '/api/assets', // assets are not public, but handle their own authentication. This is a special case to allow share_key arguments to work easily.
 ];
 
 /**
