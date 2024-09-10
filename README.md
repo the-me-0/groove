@@ -60,7 +60,7 @@ Overall player upgrade:
 - create a `.env` file based upon the `.env.example`
 - install dependencies with `npm i`
 - run `docker compose up` in order to start your database and wait for it to initialise
-- run `npw prisma generate` and `npm run migrate` and name the migration "main" <- generates DB types for typescript & creates the DB in docker
+- run `npx prisma generate` and `npm run migrate` and name the migration "main" <- generates DB types for typescript & creates the DB in docker
 - run the project using `npm run dev`
 
 ## Start the project - deployment/production
